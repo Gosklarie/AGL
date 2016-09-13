@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>抠图</title>
+<style type="text/css">
+#canvas_find_happy {
+	background-color: antiquewhite;
+	margin-top:50px;
+}
+
+body {
+	text-align: center;
+}
+</style>
+<script type="text/javascript">
+var count=1,
+preLoadFlag=false;
+window.happyImage="images/1.jpg";
+var image = document.createElement("img");
+image.src=window.happyImage;
+function reloadImage(type){
+	if(type=='bf'){
+		count--;
+		if(count<1){
+			count=8;
+		}
+	}else{
+		count++;
+		if(count>8){
+			count=1;
+		}
+	}
+	window.happyImage="images/"+count+".jpg";
+	image = document.createElement("img");
+	image.src=window.happyImage;
+	console.log(image);
+	resetCanvas();
+}
+function preLoadImage(){
+	for(var i=8;i>0;i--){
+		window.happyImage="images/"+i+".jpg";
+		image = document.createElement("img");
+		image.src=window.happyImage;
+		console.log(image);
+	}
+	preLoadFlag=true;
+}
+function resetCanvas(){
+	var drawing = document.getElementById("canvas_find_happy");
+	drawing.height=image.height;
+	drawing.width=image.width;
+	//正常的游戏会在这里往canvas中放衣服多的图片，在“开撕”的时候写衣服少的图片…
+	if(!preLoadFlag){
+		preLoadImage();
+	}
+}
+function showImage(drawing,event){
+	if(event.buttons==1){
+		if(drawing.getContext){
+			var size=document.getElementById("show_image_size").value;
+			var offsetX = event.offsetX,
+			offsetY = event.offsetY;
+			var context = drawing.getContext("2d");
+			context.globalCompositionOperation="copy";
+			context.drawImage(image,offsetX,offsetY,size,size,offsetX,offsetY,size,size);
+		}
+	}
+}
+function resetImage(){
+	var drawing = document.getElementById("canvas_find_happy");
+	var context = drawing.getContext("2d");
+	context.fillStyle="antiquewhite";
+	context.fillRect(0,0,image.width,image.height);
+}
+</script>
+</head>
+<body onload="resetCanvas()">
+<div>
+<h3>点击下方开撕，不要松手哦</h3>
+<label>大小</label>
+<select id="show_image_size">
+	<option value="10" >▁</option>
+	<option value="20" >▃</option>
+	<option value="30" >▅</option>
+	<option value="40" >▇</option>
+	<option value="50" >█</option>
+</select>
+<button onclick="reloadImage('bf')">上一张</button>
+<button onclick="resetImage()">重置</button>
+<button onclick="reloadImage('nt')">下一张</button>
+</div>
+<canvas height="500" width="500" id="canvas_find_happy" onmousemove="showImage(this,event)" onmousedown="showImage(this,event)"></canvas>
+</body>
+</html>
