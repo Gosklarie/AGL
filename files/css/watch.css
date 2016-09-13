@@ -1,5 +1,5 @@
 body {
-    background: black;
+    background: #8cd8fc;
 }
 
 .clock {
@@ -58,7 +58,7 @@ body {
 }
 
 .circle-3 {
-    background: black;
+    background: #8cd8fc;
     width: 4px;
     height: 4px;
 }
