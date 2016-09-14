@@ -2,9 +2,10 @@
 <html lang="zh-cn">
 <head>
   <meta charset="UTF-8">
-  <title>Gosklarie的个人主页</title>
+  <title>Gosklarie的个人主页.</title>
     <link rel="stylesheet" href="files/css/common.css" media="screen" type="text/css"/>
-    <link rel="shortcut icon" type="image/x-icon" href="files/images/1_goskalrie.jpg"/>
+	<link rel="shortcut icon" type="image/x-icon" href="files/images/1_goskalrie.jpg"/>
+	<script type="text/javascript" src="files/jquery-1.3.2.js"></script>
     <script type="text/javascript">
         window.onload=function(){
            document.onmousemove=function(ev){
@@ -33,30 +34,44 @@
 		  <iframe src="files/watchmini.html" height="100%" width="100%" scrolling="no" FrameBorder="0"></iframe>
 	</div>
 	<div class="main_content">
-		<div class="side">
+		<div class="side" style="overflow:scroll">
 			<div class="my_info" >
-				<ul class="panel_head"><span>个人资料</span></ul>
+				<ul class="panel_head"><span>个人信息</span></ul>
 				<div id="blog_userface">
 					<a href="http://my.csdn.net/Goskalrie" target="_blank">
-						<img src="files/images/1_goskalrie.jpg" title="访问我的空间">
+						<img src="files/images/1_goskalrie.jpg" title="我的CSDN">
 					</a>
 					<br>
 					<span><a href="http://my.csdn.net/Goskalrie" class="user_name" target="_blank">Goskalrie</a></span>
 				</div>
 			</div>
 			<hr/>
-			<div class="article_list">
+			<ul class="panel_head"><span>最近更新</span></ul>
+			<div class="lastupdate">
 				<a href="https://gosklarie.github.io/AGL/files/subjects/findhappy/findhappy.html" target="_blank">抠图游戏</a>
 			</div>
+			<ul class="panel_head"><span>文章列表</span></ul>
+			<div class="article_list">
+				<ul id="articles" class="articles" style="text-align:start;list-style-image:url('files/images/text_enriched.png');font-size:12px;"><ul>
+			</div>
+		</div>
+		<div class="midcontent" style="position:absolute;left:210px;">
+		<div class="guide_panel" style="font-size:12px;">
+			<label>当前位置:</label><label class="guide_label" id="guide_label" style="text-decoration:underline;color:#0000ee;"></label>
+		</div>
+		<div class="content_panel" style="height:750px;width:750px;">
+			<iframe src="files/photos.html" height="100%" width="100%" scrolling="no" FrameBorder="0"/></iframe>
+		</div>
 		</div>
 		<div id="wrapper">
 			<img src="files/images/photos.png" width="64" title="相册">
 			<img src="files/images/subjects.png" width="64" title="小项目">
-			<img src="files/images/favourites.png" width="64" title="个人收藏">
+			<img src="files/images/favourites.png" width="64" title="收藏">
 			<img src="files/images/share.png" width="64" title="最近更新">
-			<img src="files/images/lists.png" width="64" title="博客列表">
+			<img src="files/images/lists.png" width="64" title="文章列表">
 		</div>
 	</div>
+	<script type="text/javascript" src="files/js/treearticle.js"></script>
 	<div class="frame_bottom" style="height:110px">
 		<iframe src="files/bottom.html" height="100%" width="100%" scrolling="no" FrameBorder="0"/></iframe>
 	</div>
