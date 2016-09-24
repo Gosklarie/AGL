@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="commands.css" media="screen"type="text/css" />
+		<link rel="shortcut icon" type="image/x-icon" href="../../../files/images/1_goskalrie.jpg" />
+	</head>
+	<body>
+<div class="article-body">
+		
+			<div class="article-intro" id="content">
+			
+			<h1>Linux locate命令</h1><p><a href="commands.html"><img class="navup" src="images/up.gif" alt="Linux 命令大全"> Linux 常用命令</a></p>
+<p>Linux locate命令用于查找符合条件的文档，他会去保存文档和目录名称的数据库内，查找合乎范本样式条件的文档或目录。</p>
+<p>一般情况我们只需要输入 <strong>locate your_file_name</strong> 即可查找指定文件。</p>
+
+<h3>语法</h3>
+<pre class="prettyprint prettyprinted"><span class="pln">locate </span><span class="pun">[-</span><span class="pln">d </span><span class="pun">][--</span><span class="pln">help</span><span class="pun">][--</span><span class="pln">version</span><span class="pun">][范本样式...]</span></pre>
+
+<p><b>参数：</b></p>
+<ul><li>
+-d或--database= 配置locate指令使用的数据库。locate指令预设的数据库位于/var/lib/slocate目录里，文档名为slocate.db，您可使用 这个参数另行指定。</li><li>
+--help 　在线帮助。</li><li>
+--version 　显示版本信息。</li></ul>
+
+<h3>实例</h3>
+<p>查找passwd文件，输入以下命令：</p>
+<pre class="prettyprint prettyprinted"><span class="pln">locate passwd</span></pre> 
+
+<h3>附加说明</h3>
+<p>
+locate与find 不同: find 是去硬盘找，locate 只在/var/lib/slocate资料库中找。</p>
+<p>
+locate的速度比find快，它并不是真的查找，而是查数据库，一般文件数据库在/var/lib/slocate/slocate.db中，所以locate的查找并不是实时的，而是以数据库的更新为准，一般是系统自己维护，也可以手工升级数据库 ，命令为：
+</p><pre class="prettyprint prettyprinted"><span class="pln">locate </span><span class="pun">-</span><span class="pln">u </span></pre>
+<p><a href="commands.html"><img class="navup" src="images/up.gif" alt="Linux 命令大全"> Linux 常用命令</a></p>	
+			
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="commands.css" media="screen"type="text/css" />
+		<link rel="shortcut icon" type="image/x-icon" href="../../../files/images/1_goskalrie.jpg" />
+	</head>
+	<body>
+<div class="article-body">
+		
+			<div class="article-intro" id="content">
+			
+			<h1>Linux rm命令</h1><p><a href="commands.html"><img class="navup" src="images/up.gif" alt="Linux 命令大全"> Linux 常用命令</a></p>
+<p>Linux rm命令用于删除一个文件或者目录。</p>
+<h3>语法</h3><pre class="prettyprint prettyprinted"><span class="pln">rm </span><span class="pun">[</span><span class="pln">options</span><span class="pun">]</span><span class="pln"> name</span><span class="pun">...</span></pre>
+
+<p><b>参数</b>：</p>
+<ul><li>-i 删除前逐一询问确认。</li>
+<li>-f 即使原档案属性设为唯读，亦直接删除，无需逐一确认。</li>
+<li>-r 将目录及以下之档案亦逐一删除。</li></ul>
+<h3>实例</h3>
+<p>删除文件可以直接使用rm命令，若删除目录则必须配合选项"-r"，例如：</p>
+<pre class="prettyprint prettyprinted"><span class="com"># rm  test.txt </span><span class="pln">
+rm</span><span class="pun">：是否删除</span><span class="pln"> </span><span class="pun">一般文件</span><span class="pln"> </span><span class="str">"test.txt"</span><span class="pun">?</span><span class="pln"> y  
+</span><span class="com"># rm  homework  </span><span class="pln">
+rm</span><span class="pun">:</span><span class="pln"> </span><span class="pun">无法删除目录</span><span class="str">"homework"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">是一个目录</span><span class="pln">  
+</span><span class="com"># rm  -r  homework  </span><span class="pln">
+rm</span><span class="pun">：是否删除</span><span class="pln"> </span><span class="pun">目录</span><span class="pln"> </span><span class="str">"homework"</span><span class="pun">?</span><span class="pln"> y </span></pre>
+<p>删除当前目录下的所有文件及目录，命令行为：</p>
+<pre class="prettyprint prettyprinted"><span class="pln">rm  </span><span class="pun">-</span><span class="pln">r  </span><span class="pun">*</span><span class="pln"> </span></pre>
+<p>文件一旦通过rm命令删除，则无法恢复，所以必须格外小心地使用该命令。</p><p><a href="commands.html"><img class="navup" src="images/up.gif" alt="Linux 命令大全"> Linux 常用命令</a></p>			
+			
+			</div>
+		</div>
+	</body>
+</html>

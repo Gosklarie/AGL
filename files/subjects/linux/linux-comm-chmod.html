@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="commands.css" media="screen"type="text/css" />
+<link rel="shortcut icon" type="image/x-icon" href="../../../files/images/1_goskalrie.jpg" />
+</head>
+<body>
+<div class="article-body">
+		
+			<div class="article-intro" id="content">
+			
+			<h1>Linux chmod命令</h1>
+			<p><a href="commands.html"><img class="navup" src="images/up.gif" alt="Linux 命令大全"> Linux 常用命令</a></p>
+
+<p>Linux/Unix 的文件调用权限分为三级 : 文件拥有者、群组、其他。利用 chmod 可以藉以控制文件如何被他人所调用。</p>
+
+<p><b>使用权限</b> : 所有使用者</p>
+
+<h3>语法</h3>
+<pre class="prettyprint prettyprinted"><span class="pln">chmod </span><span class="pun">[-</span><span class="pln">cfvR</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[--</span><span class="pln">help</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[--</span><span class="pln">version</span><span class="pun">]</span><span class="pln"> mode file</span><span class="pun">...</span></pre>
+
+<h3>参数说明</h3>
+<li>mode : 权限设定字串，格式如下 : <pre class="prettyprint prettyprinted"><span class="pun">[</span><span class="pln">ugoa</span><span class="pun">...][[+-=][</span><span class="pln">rwxX</span><span class="pun">]...][,...]</span></pre><br>其中：
+<ul>
+<li>u 表示该文件的拥有者，g 表示与该文件的拥有者属于同一个群体(group)者，o 表示其他以外的人，a 表示这三者皆是。</li>
+<li>+ 表示增加权限、- 表示取消权限、= 表示唯一设定权限。</li>
+<li>r 表示可读取，w 表示可写入，x 表示可执行，X 表示只有当该文件是个子目录或者该文件已经被设定过为可执行。</li>
+</ul></li>
+<li>-c : 若该文件权限确实已经更改，才显示其更改动作</li>
+<li>-f : 若该文件权限无法被更改也不要显示错误讯息</li>
+<li>-v : 显示权限变更的详细资料</li>
+<li>-R : 对目前目录下的所有文件与子目录进行相同的权限变更(即以递回的方式逐个变更)</li>
+<li>--help : 显示辅助说明</li>
+<li>--version : 显示版本</li>
+
+<h3>实例</h3>
+<p>将文件 file1.txt 设为所有人皆可读取 :</p>
+<pre class="prettyprint prettyprinted"><span class="pln">chmod ugo</span><span class="pun">+</span><span class="pln">r file1</span><span class="pun">.</span><span class="pln">txt</span></pre>
+<p>将文件 file1.txt 设为所有人皆可读取 :</p>
+<pre class="prettyprint prettyprinted"><span class="pln">chmod a</span><span class="pun">+</span><span class="pln">r file1</span><span class="pun">.</span><span class="pln">txt</span></pre>
+<p>将文件 file1.txt 与 file2.txt 设为该文件拥有者，与其所属同一个群体者可写入，但其他以外的人则不可写入 :</p>
+<pre class="prettyprint prettyprinted"><span class="pln">chmod ug</span><span class="pun">+</span><span class="pln">w</span><span class="pun">,</span><span class="pln">o</span><span class="pun">-</span><span class="pln">w file1</span><span class="pun">.</span><span class="pln">txt file2</span><span class="pun">.</span><span class="pln">txt</span></pre>
+<p>将 ex1.py 设定为只有该文件拥有者可以执行 :</p>
+<pre class="prettyprint prettyprinted"><span class="pln">chmod u</span><span class="pun">+</span><span class="pln">x ex1</span><span class="pun">.</span><span class="pln">py</span></pre>
+<p>将目前目录下的所有文件与子目录皆设为任何人可读取 :</p>
+<pre class="prettyprint prettyprinted"><span class="pln">chmod </span><span class="pun">-</span><span class="pln">R a</span><span class="pun">+</span><span class="pln">r </span><span class="pun">*</span></pre>
+<p>此外chmod也可以用数字来表示权限如 :</p>
+<pre class="prettyprint prettyprinted"><span class="pln">chmod </span><span class="lit">777</span><span class="pln"> file</span></pre>
+<p>语法为：</p><pre class="prettyprint prettyprinted"><span class="pln">chmod abc file</span></pre>
+<p>其中a,b,c各为一个数字，分别表示User、Group、及Other的权限。</p>
+<h4>r=4，w=2，x=1</h4>
+<ul>
+<li>若要rwx属性则4+2+1=7；</li>
+<li>若要rw-属性则4+2=6；</li>
+<li>若要r-x属性则4+1=5。</li>
+</ul>
+
+<pre class="prettyprint prettyprinted"><span class="pln">chmod a</span><span class="pun">=</span><span class="pln">rwx file</span></pre>
+<p>和</p>
+<pre class="prettyprint prettyprinted"><span class="pln">chmod </span><span class="lit">777</span><span class="pln"> file</span></pre>
+<p>效果相同</p>
+<pre class="prettyprint prettyprinted"><span class="pln">chmod ug</span><span class="pun">=</span><span class="pln">rwx</span><span class="pun">,</span><span class="pln">o</span><span class="pun">=</span><span class="pln">x file</span></pre>
+<p>和</p>
+<pre class="prettyprint prettyprinted"><span class="pln">chmod </span><span class="lit">771</span><span class="pln"> file</span></pre>
+<p>效果相同</p>
+<p>若用chmod 4755 filename可使此程序具有root的权限</p>
+<p><a href="commands.html"><img class="navup" src="images/up.gif" alt="Linux 命令大全"> Linux 常用命令</a></p>
+
+			
+			
+			</div>
+		</div>
+</body>
+</html>

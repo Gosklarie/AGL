@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="commands.css" media="screen"type="text/css" />
+<link rel="shortcut icon" type="image/x-icon" href="../../../files/images/1_goskalrie.jpg" />
+</head>
+<body>
+<div class="article-body">
+		
+			<div class="article-intro" id="content">
+			
+			<h1>Linux cat命令</h1>
+<p><a href="commands.html"><img class="navup" src="images/up.gif" alt="Linux 命令大全"> Linux 常用命令</a></p>
+
+<h2>命令：cat</h2>
+cat命令用于把档案串连接后传到基本输出（萤幕或加 &gt; fileName 到另一个档案）
+<h3>使用权限</h3>
+<p>所有使用者</p>
+<h3>语法格式</h3>
+<pre class="prettyprint prettyprinted"><span class="pln">cat </span><span class="pun">[-</span><span class="typ">AbeEnstTuv</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[--</span><span class="pln">help</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[--</span><span class="pln">version</span><span class="pun">]</span><span class="pln"> fileName</span></pre>
+
+<h3>参数说明：</h3>
+<p>　　-n 或 --number 由 1 开始对所有输出的行数编号</p>
+<p>　　-b 或 --number-nonblank 和 -n 相似，只不过对于空白行不编号</p>
+<p>　　-s 或 --squeeze-blank 当遇到有连续两行以上的空白行，就代换为一行的空白行</p>
+<p>　　-v 或 --show-nonprinting</p>
+<h3>实例：</h3>
+<p>把 textfile1 的档案内容加上行号后输入 textfile2 这个档案里</p>
+<pre class="prettyprint prettyprinted"><span class="pln">cat </span><span class="pun">-</span><span class="pln">n textfile1 </span><span class="pun">&gt;</span><span class="pln"> textfile2</span></pre>
+<p> 把 textfile1 和 textfile2 的档案内容加上行号（空白行不加）之后将内容附加到 textfile3 里。</p>
+<pre class="prettyprint prettyprinted"><span class="pln">cat </span><span class="pun">-</span><span class="pln">b textfile1 textfile2 </span><span class="pun">&gt;&gt;</span><span class="pln"> textfile3</span></pre>
+<p>清空/etc/test.txt档案内容</p>
+<pre class="prettyprint prettyprinted"><span class="pln">cat </span><span class="pun">/</span><span class="pln">dev</span><span class="pun">/</span><span class="kwd">null</span><span class="pln"> </span><span class="pun">&gt;</span><span class="pln"> </span><span class="str">/etc/</span><span class="pln">test</span><span class="pun">.</span><span class="pln">txt</span></pre>
+<p>　　cat 也可以用来制作镜像文件。例如要制作软碟的像文件，将软碟放好后打</p>
+<pre class="prettyprint prettyprinted"><span class="pln">cat </span><span class="pun">/</span><span class="pln">dev</span><span class="pun">/</span><span class="pln">fd0 </span><span class="pun">&gt;</span><span class="pln"> OUTFILE</span></pre>
+<p>相反的，如果想把 image file 写到软碟，请打</p>
+<pre class="prettyprint prettyprinted"><span class="pln">cat IMG_FILE </span><span class="pun">&gt;</span><span class="pln"> </span><span class="str">/dev/</span><span class="pln">fd0</span></pre>
+<p>　　<b>注</b>：</p>
+<ul>
+<li>1. OUTFILE 指输出的镜像文件名。</li>
+<li>2. IMG_FILE 指镜像文件。</li>
+<li>3. 若从镜像文件写回 device 时，device 容量需与相当。</li>
+<li>4. 通常用在制作开机磁片。</li>
+</ul>
+<p><a href="commands.html"><img class="navup" src="images/up.gif" alt="Linux 命令大全"> Linux 常用命令</a></p>
+			
+			
+			</div>
+		</div>
+</body>
+</html>

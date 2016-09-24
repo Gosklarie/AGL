@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="commands.css" media="screen"type="text/css" />
+		<link rel="shortcut icon" type="image/x-icon" href="../../../files/images/1_goskalrie.jpg" />
+	</head>
+	<body>
+<div class="article-body">
+		
+			<div class="article-intro" id="content">
+			
+			<h1>Linux whereis命令</h1>
+<p><a href="commands.html"><img class="navup" src="images/up.gif" alt="Linux 命令大全"> Linux 常用命令</a></p>
+<p>Linux whereis命令用于查找文件。</p><p>该指令会在特定目录中查找符合条件的文件。这些文件应属于原始代码、二进制文件，或是帮助文件。
+</p><p>
+该指令只能用于查找二进制文件、源代码文件和man手册页，一般文件的定位需使用locate命令。</p>
+<h3>语法</h3><pre class="prettyprint prettyprinted"><span class="pln">whereis </span><span class="pun">[-</span><span class="pln">bfmsu</span><span class="pun">][-</span><span class="pln">B </span><span class="pun">&lt;目录&gt;...][-</span><span class="pln">M </span><span class="pun">&lt;目录&gt;...][-</span><span class="pln">S </span><span class="pun">&lt;目录&gt;...][文件...]</span></pre>
+
+<p><b>参数</b>：</p>
+<li></li><li>-b 　只查找二进制文件。</li>
+<li>-B&lt;目录&gt; 　只在设置的目录下查找二进制文件。</li>
+<li>-f 　不显示文件名前的路径名称。</li>
+<li>-m 　只查找说明文件。</li>
+<li>-M&lt;目录&gt; 　只在设置的目录下查找说明文件。</li>
+<li>-s 　只查找原始代码文件。</li>
+<li>-S&lt;目录&gt; 　只在设置的目录下查找原始代码文件。</li>
+<li>-u 　查找不包含指定类型的文件。</li>
+<h3>实例</h3>
+<p>使用指令"whereis"查看指令"bash"的位置，输入如下命令：</p>
+<pre class="prettyprint prettyprinted"><span class="pln">$ whereis bash </span></pre>
+<p>上面的指令执行后，输出信息如下所示：</p>
+<pre class="prettyprint prettyprinted"><span class="pln">bash</span><span class="pun">:</span><span class="str">/bin/</span><span class="pln">bash</span><span class="pun">/</span><span class="pln">etc</span><span class="pun">/</span><span class="pln">bash</span><span class="pun">.</span><span class="pln">bashrc</span><span class="pun">/</span><span class="pln">usr</span><span class="pun">/</span><span class="pln">share</span><span class="pun">/</span><span class="pln">man</span><span class="pun">/</span><span class="pln">man1</span><span class="pun">/</span><span class="pln">bash</span><span class="pun">.</span><span class="lit">1.gz</span><span class="pln"> </span></pre>
+<p>注意：以上输出信息从左至右分别为查询的程序名、bash路径、bash的man 手册页路径。
+</p><p>
+如果用户需要单独查询二进制文件或帮助文件，可使用如下命令：
+</p>
+<pre class="prettyprint prettyprinted"><span class="pln">$ whereis </span><span class="pun">-</span><span class="pln">b bash 
+$ whereis </span><span class="pun">-</span><span class="pln">m bash </span></pre>
+<p>输出信息如下：</p>
+<pre class="prettyprint prettyprinted"><span class="pln">$ whereis </span><span class="pun">-</span><span class="pln">b bash               </span><span class="com">#显示bash 命令的二进制程序  </span><span class="pln">
+bash</span><span class="pun">:</span><span class="pln"> </span><span class="str">/bin/</span><span class="pln">bash </span><span class="pun">/</span><span class="pln">etc</span><span class="pun">/</span><span class="pln">bash</span><span class="pun">.</span><span class="pln">bashrc </span><span class="pun">/</span><span class="pln">usr</span><span class="pun">/</span><span class="pln">share</span><span class="pun">/</span><span class="pln">bash    </span><span class="com"># bash命令的二进制程序的地址  </span><span class="pln">
+$ whereis </span><span class="pun">-</span><span class="pln">m bash               </span><span class="com">#显示bash 命令的帮助文件  </span><span class="pln">
+bash</span><span class="pun">:</span><span class="pln"> </span><span class="str">/usr/</span><span class="pln">share</span><span class="pun">/</span><span class="pln">man</span><span class="pun">/</span><span class="pln">man1</span><span class="pun">/</span><span class="pln">bash</span><span class="pun">.</span><span class="lit">1.gz</span><span class="pln">  </span><span class="com">#bash命令的帮助文件地址  </span></pre><p><a href="commands.html"><img class="navup" src="images/up.gif" alt="Linux 命令大全"> Linux 常用命令</a></p>			
+			
+			</div>
+		</div>
+	</body>
+</html>

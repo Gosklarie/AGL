@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="commands.css" media="screen"type="text/css" />
+		<link rel="shortcut icon" type="image/x-icon" href="../../../files/images/1_goskalrie.jpg" />
+	</head>
+	<body>
+<div class="article-body">
+		
+			<div class="article-intro" id="content">
+			
+			<h1>Linux rcp命令</h1>
+<p><a href="commands.html"><img class="navup" src="images/up.gif" alt="Linux 命令大全"> Linux 常用命令</a></p>
+<p>Linux rcp命令用于复制远程文件或目录。</p><p>rcp指令用在远端复制文件或目录，如同时指定两个以上的文件或目录，且最后的目的地是一个已经存在的目录，则它会把前面指定的所有文件或目录复制到该目录中。</p>
+
+<h3>语法</h3><pre class="prettyprint prettyprinted"><span class="pln">rcp </span><span class="pun">[-</span><span class="pln">pr</span><span class="pun">][源文件或目录][目标文件或目录]</span></pre> <p>或</p>
+<pre class="prettyprint prettyprinted"><span class="pln">rcp </span><span class="pun">[-</span><span class="pln">pr</span><span class="pun">][源文件或目录...][目标文件]</span></pre>
+<p><b>参数</b>：</p>
+<p>-p 　保留源文件或目录的属性，包括拥有者，所属群组，权限与时间。</p>
+<p>-r 　递归处理，将指定目录下的文件与子目录一并处理。</p>
+<h3>实例</h3>
+<p>使用rcp指令复制远程文件到本地进行保存。</p>
+<p>设本地主机当前账户为rootlocal，远程主机账户为root，要将远程主机（218.6.132.5）主目录下的文件"testfile"复制到本地目录"test"中，则输入如下命令：</p>
+<pre class="prettyprint prettyprinted"><span class="pln">rcp root@218</span><span class="pun">.</span><span class="lit">6.132</span><span class="pun">.</span><span class="lit">5</span><span class="pun">:./</span><span class="pln">testfile testfile  </span><span class="com">#复制远程文件到本地  </span><span class="pln">
+rcp root@218</span><span class="pun">.</span><span class="lit">6.132</span><span class="pun">.</span><span class="lit">5</span><span class="pun">:</span><span class="pln">home</span><span class="pun">/</span><span class="pln">rootlocal</span><span class="pun">/</span><span class="pln">testfile testfile  
+</span><span class="com">#要求当前登录账户cmd 登录到远程主机  </span><span class="pln">
+rcp </span><span class="lit">218.6</span><span class="pun">.</span><span class="lit">132.5</span><span class="pun">:./</span><span class="pln">testfile testfile</span></pre>
+<p>注意：指令"rcp"执行以后不会有返回信息，仅需要在目录"test"下查看是否存在文件"testfile"。若存在，则表示远程复制操作成功，否则远程复制操作失败。
+</p>
+<p><a href="commands.html"><img class="navup" src="images/up.gif" alt="Linux 命令大全"> Linux 常用命令</a></p>		
+			
+			</div>
+		</div>
+	</body>
+</html>
