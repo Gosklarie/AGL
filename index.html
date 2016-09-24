@@ -5,29 +5,34 @@
   <title>Gosklarie的个人主页.</title>
     <link rel="stylesheet" href="files/css/common.css" media="screen" type="text/css"/>
 	<link rel="shortcut icon" type="image/x-icon" href="files/images/1_goskalrie.jpg"/>
+	<link rel="stylesheet" type="text/css" href="files/sdmenu/sdmenu.css" />
+	<script type="text/javascript" src="files/sdmenu/sdmenu.js">
+	</script>
+	<script type="text/javascript">
+	var myMenu;
+	window.onload = function() {
+		myMenu = new SDMenu("my_menu");
+		myMenu.init();
+		setDivSize();
+	};
+	function setDivSize(){
+		var $div = $('#div_main_frame');
+		var width="";
+		if (window.innerWidth){
+			winWidth = window.innerWidth; 
+		} else if ((document.body) && (document.body.clientWidth)){
+			winWidth = document.body.clientWidth; 
+		}
+		width = winWidth-240 + 'px';
+		$('head').append('<style type="text/css">.div_frame_main{width:' + width + ';}<style>');
+		$($div).addClass('div_frame_main');
+	}
+	function reloadMainFrame(path){
+		var $frame = $('#main_frame');
+		$($frame).attr('src',path);
+	} 
+	</script>
 	<script type="text/javascript" src="files/jquery-1.3.2.js"></script>
-    <script type="text/javascript">
-        window.onload=function(){
-           document.onmousemove=function(ev){
-               var oevent=ev||event;
-               var aimg=document.getElementsByTagName('img');
-               var odiv=document.getElementById('wrapper');
-               for(var i=0;i<aimg.length;i++){
-                      var x=aimg[i].offsetLeft+aimg[i].offsetWidth/2;
-                      var y=aimg[i].offsetTop+odiv.offsetTop+aimg[i].offsetHeight/2;
-                      var a=x-oevent.clientX;
-                      var b=y-oevent.clientY;
-                      var dis=parseInt(Math.sqrt(a*a+b*b));
-                      var scale=1-dis/200;
-                    if(scale<0.5){
-                        scale=0.5;
-                    }
-                    aimg[i].width=scale*128;
-
-               }
-           }
-        }
-    </script>
 </head>
 <body style="background:url('files/images/snow_trees.jpg') no-repeat;background-size:cover;background-attachment:fixed;">
 	<div class="frame_top">
@@ -46,31 +51,32 @@
 				</div>
 			</div>
 			<hr/>
-			<ul class="panel_head"><span>最近更新</span></ul>
-			<div class="lastupdate">
-				<a href="https://gosklarie.github.io/AGL/files/subjects/findhappy/findhappy.html" target="_blank">抠图游戏</a>
-			</div>
-			<ul class="panel_head"><span>文章列表</span></ul>
-			<div class="article_list">
-				<ul id="articles" class="articles" style="text-align:start;list-style-image:url('files/images/text_enriched.png');font-size:12px;"><ul>
-			</div>
-		</div>
-		<div class="midcontent" style="position:absolute;left:210px;">
-		<div class="guide_panel" style="font-size:12px;">
-			<label>当前位置:</label><label class="guide_label" id="guide_label" style="text-decoration:underline;color:#0000ee;"></label>
-		</div>
-		<div class="content_panel" style="height:750px;width:750px;">
-			<iframe src="files/photos.html" height="100%" width="100%" scrolling="no" FrameBorder="0"/></iframe>
-		</div>
-		</div>
-		<div id="wrapper">
-			<img src="files/images/photos.png" width="64" title="相册">
-			<img src="files/images/subjects.png" width="64" title="小项目">
-			<img src="files/images/favourites.png" width="64" title="收藏">
-			<img src="files/images/share.png" width="64" title="最近更新">
-			<img src="files/images/lists.png" width="64" title="文章列表">
-		</div>
-	</div>
+	<div style="float: left" id="my_menu" class="sdmenu">
+      <div class="">
+        <span>最近更新</span>
+       <a href="javascript:reloadMainFrame('files/subjects/findhappy/findhappy.html')">抠图游戏</a>
+        <a href="javascript:reloadMainFrame('files/subjects/linux/commands.html')">Linux常用命令</a>
+        <a href="#" title="暂未完成，测试中。。。">简单代码生成器</a>
+      </div>
+      <div class="">
+        <span>常用网址</span>
+        <a href="http://www.w3school.com.cn/" target="_blank">w3school</a>
+        <a href="http://mvnrepository.com/" target="_blank">Maven中央仓库</a>
+        <a href="http://www.fontawesome.com.cn/faicons/#webapp-icons" target="_blank">Font Awesome中文</a>
+        <a href="http://cli.im/" target="_blank">草料二维码生成美化</a>
+        <a href="http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html" target="_blank">微信JSSDK</a>
+        <a href="https://linux.cn/" target="_blank">Linux中国</a>
+      </div>
+      <div>
+        <span>博客文章</span>
+        <ul id="articles" class="collapsed" style="text-align:start;list-style-image:url('files/images/text_enriched.png');font-size:12px;"><ul>
+      </div>
+    </div>
+</div>
+</div>
+<div id= "div_main_frame" class="midcontent" style="position:absolute;left:210px;top: 130px;height:768px;">
+	<iframe id = 'main_frame'src="files/photos.html" height="100%" width="100%" frameborder="0"/></iframe>
+</div>
 	<script type="text/javascript" src="files/js/treearticle.js"></script>
 	<div class="frame_bottom" style="height:110px">
 		<iframe src="files/bottom.html" height="100%" width="100%" scrolling="no" FrameBorder="0"/></iframe>
