@@ -3,7 +3,12 @@
 <head>
 <meta charset="utf-8">
 <title>获取IP地址</title>
+<script src="files/js/fingerprint.js"></script>
 <script type="text/javascript">
+function getfingerprint(){
+	 var fingerprint = new Fingerprint().get();
+	 return fingerprint;
+}
 function setCookie(name,value){  
     var Days = 30*12;   //cookie 将被保存一年  
     var exp  = new Date();  //获得当前时间  
@@ -47,6 +52,22 @@ function disableButton(flag){
 	document.getElementById('thered').appendChild(document.createTextNode(flag));
 }
 </script>
+     <script>
+     function getLocation(callback){
+    	    if(navigator.geolocation){
+    	        navigator.geolocation.getCurrentPosition(
+    	                function(p){
+    	                    callback(p.coords.latitude, p.coords.longitude);
+    	                },
+    	                function(e){
+    	                    var msg = e.code + "\n" + e.message;
+    	                }
+    	        );
+    	    }else{
+    	    	alert('noway');
+    	    }
+    	}
+</script> 
 </head>
 <body onload="initGetTheRedButton()">
 <input type="button" value="showIp" onclick="showIp()">
@@ -54,6 +75,8 @@ NowIP:<label id="nowip"></label><br/>
 <hr/>
 <input id="btnred" type="button" value="抢红包" onClick="getTheRed()">
 TheRedCount:￥<label id="thered" style="color:red;"></label>
+ <br/>
+     <input type="button" id="btngetLocation" value="获取唯一标识符" onclick="alert(getfingerprint());" /> 
 <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
 <script type="text/javascript">
 function showIp(){
