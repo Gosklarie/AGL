@@ -3,11 +3,62 @@
 <head>
 <meta charset="utf-8">
 <title>获取IP地址</title>
+<script type="text/javascript">
+function setCookie(name,value){  
+    var Days = 30*12;   //cookie 将被保存一年  
+    var exp  = new Date();  //获得当前时间  
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);  //换成毫秒  
+    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();  
+}   
+function getCookie(name){  
+    var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));  
+    if(arr != null){  
+     return unescape(arr[2]);   
+    }else{  
+     return null;  
+    }  
+}   
+function delCookie(name){  
+    var exp = new Date();   
+    exp.setTime(exp.getTime() - 1);  
+    var cval=getCookie(name);  
+    if(cval!=null) document.cookie= name + "="+cval+";expires="+exp.toGMTString();  
+}
+function showCookie(){
+	document.getElementById('nowcookie').appendChild(document.createTextNode(getCookie('admin')));
+}
+function initGetTheRedButton(){
+	var flag = getCookie("redState");
+	if(flag){
+		disableButton(flag);
+	}
+}
+function getTheRed(){
+	if(document.getElementById('btnred').style.color=='gray'){
+		alert("该设备已使用");
+	}else{
+		var redCount = "100";
+		setCookie("redState",redCount);
+		disableButton(redCount);
+	}
+}
+function disableButton(flag){
+	document.getElementById('btnred').style.color = "gray";
+	document.getElementById('thered').appendChild(document.createTextNode(flag));
+}
+</script>
 </head>
-<body>
+<body onload="initGetTheRedButton()">
+<input type="button" value="showIp" onclick="showIp()">
+NowIP:<label id="nowip"></label><br/>
+<hr/>
+<input id="btnred" type="button" value="抢红包" onClick="getTheRed()">
+TheRedCount:￥<label id="thered" style="color:red;"></label>
 <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
 <script type="text/javascript">
-document.write(returnCitySN["cip"] + ','+ returnCitySN["cname"])
+function showIp(){
+	document.getElementById('nowip').appendChild(document.createTextNode(returnCitySN["cip"] + ','+ returnCitySN["cname"]));
+}
 </script>
 </body>
 </html>
