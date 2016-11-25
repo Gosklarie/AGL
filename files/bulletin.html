@@ -27,13 +27,13 @@ p{
 </body>
 <script type="text/javascript">
 function getParam(paramName){
-	var url = window.location.href;
+	var url = window.location.href.replaceAll("%20"," ");
 	var paramsStr = url.substr(url.indexOf("?")+1);
 	var params = paramsStr.split("&");
 	for(var i=0;i<params.length;i++){
 		var keyAndValue = params[i].split("=");
 		if(keyAndValue[0] == paramName){
-			return keyAndValue[1].replaceAll("%20"," ");
+			return keyAndValue[1];
 		}
 	}
 }
