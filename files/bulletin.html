@@ -33,7 +33,7 @@ function getParam(paramName){
 	for(var i=0;i<params.length;i++){
 		var keyAndValue = params[i].split("=");
 		if(keyAndValue[0] == paramName){
-			return keyAndValue[1]; 
+			return keyAndValue[1].replaceAll("%20"," ");
 		}
 	}
 }
