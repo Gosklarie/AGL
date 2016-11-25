@@ -22,7 +22,22 @@ p{
 	<h1>系统维护中</h1>
 	<hr/>
 	<p>给您带来不便，抱歉。我们正努力维护中。</p>
-	<p>本次维护时间为 <label style="color:red">12：00-14：00.</label></p>
+	<p>本次维护时间为 <label style="color:red" id="sTime">12:00</label> 至 <label style="color:red" id="eTime">14:00</label></p>
 	<p>祝您生活愉快。</p>
 </body>
+<script type="text/javascript">
+function getParam(paramName){
+	var url = window.location.href;
+	var paramsStr = url.substr(url.indexOf("?")+1);
+	var params = paramsStr.split("&");
+	for(var i=0;i<params.length;i++){
+		var keyAndValue = params[i].split("=");
+		if(keyAndValue[0] == paramName){
+			return keyAndValue[1]; 
+		}
+	}
+}
+document.getElementById('sTime').innerText=getParam('startTime');
+document.getElementById('eTime').innerText=getParam('endTime');
+</script>
 </html>
