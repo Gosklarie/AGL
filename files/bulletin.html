@@ -27,7 +27,7 @@ p{
 </body>
 <script type="text/javascript">
 function getParam(paramName){
-	var url = window.location.href.replaceAll("%20"," ");
+	var url = window.location.href.replace("%20"," ").replace("%20"," ");
 	var paramsStr = url.substr(url.indexOf("?")+1);
 	var params = paramsStr.split("&");
 	for(var i=0;i<params.length;i++){
