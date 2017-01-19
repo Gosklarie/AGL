@@ -2,19 +2,180 @@
 <html class="pc page-ready" data-dpr="1" style="font-size: 20px;">
 <head>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Screen Virtual Direction Key Develop Page</title>
-	<script type="text/javascript">
-	</script>
-	<style type="text/css">
-		p{
-			width:500px;
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+    function scrolldown(){
+		//到达底部，停止滚动
+		console.log(document.body.scrollTop);
+		var scrollHeight = $(window).scrollTop()+$(window).height();
+		var windowHeight = $(document).height();
+		if(scrollHeight >= windowHeight){
+			console.log('滚动到底了');
+			clearInterval(t);
+		}else{
+			document.body.scrollTop += 1;
 		}
-	</style>
+		}
+		$(function(){
+			document.body.scrollTop = 0;
+			document.body.scrollLeft = 0;
+			var ball=$("#ballcontainer")[0];
+			ball.dbtouchtimes=0;
+			ball.r={};
+			ball.r.Y = ball.offsetTop + 30;
+			ball.r.X = ball.offsetLeft + 30;
+			ball.scrollX;
+			ball.scrollY;
+			ball.movePoit = function(e){
+				var pageX = e.touches[0].pageX;
+				var pageY = e.touches[0].pageY;
+				ball.r.x=pageX;
+				ball.r.Y=pageY;
+				$("#ballcontainer").css({'top':(pageY-30),'right':(screen.width-pageX-30)});
+			};
+			ball.scrollScreen = function(e){
+				var pageX = e.touches[0].pageX;
+				var pageY = e.touches[0].pageY;
+				var offsetX = pageX-ball.r.X;
+				var offsetY = pageY-ball.r.Y;
+				var a = offsetX;
+				var b = offsetY;
+// 				console.log(offsetX + ":" + offsetY);
+				if(b>=0){
+					document.body.scrollTop += 0.3;
+				}else{
+					document.body.scrollTop -= 0.3;
+				}
+// 				if(a>0&&b>0){
+// 					document.body.scrollTop += 0.5;
+// 					document.body.scrollLeft += 0.5;
+// 				}else if(a>0&&b<0){
+// 					document.body.scrollTop += 0.5;
+// 					if(document.body.scrollLeft > 0)
+// 						document.body.scrollLeft -= 0.5;
+// 				}else if(a<0&&b>0){
+// 					if(document.body.scrollTop > 0)
+// 						document.body.scrollTop -= 0.5;
+// 					document.body.scrollLeft += 0.5;
+// 				}else if(a<0&&b<0){
+// 					if(document.body.scrollTop > 0)
+// 						document.body.scrollTop -= 0.5;
+// 					if(document.body.scrollLeft > 0)
+// 						document.body.scrollLeft -= 0.5;
+// 				}
+			};
+			//长按拖动位置
+			$('#ballcontainer').bind('touchstart',function(e){
+				e.preventDefault();
+				//按压开始时计时，计时满2.5秒可以拖动
+				//或是采用双击的形式，两次点击之间时间间隔不能大于300毫秒
+				ball.isTouched = true;
+				ball.isTouchMoved = false;
+				var dbstate = false;
+				//--双击--
+				ball.dbtouchtimes++;
+		        setTimeout(function () {
+		        	ball.dbtouchtimes = 0;
+		        }, 300);
+		        if (ball.dbtouchtimes > 1) {
+		            ball.dbtouchtimes = 0;
+		            $('#ballcontainer').css('background-color','#2196F3');
+					ball.candrag = true;
+		        }
+				//--双击--
+				/*
+				var max_time=2000;
+				var now_time=0;
+				//如果处于按压状态且没有移动，则开始计时
+				if(ball.isTouched && !ball.isTouchMoved){
+					t = setInterval(function(){
+						if(max_time <= now_time){
+							//计时截止，可以拖动
+							clearInterval(t);
+							//更改样式
+							console.log(e);
+							$('#ballcontainer').css('background-color','#2196F3');
+							ball.candrag = true;
+						}
+						now_time += 500;
+					}, 500);
+				}*/
+			});
+			
+			$('#ballcontainer').bind('touchmove',function(e){
+				e.preventDefault();
+// 				clearInterval(t);
+				//按压开始时计时，即时满2秒可以拖动
+				ball.isTouched = true;
+				ball.isTouchMoved = true;
+				if(ball.candrag){
+					ball.movePoit(e);
+				}else{
+					//修改样式，滚动屏幕
+					//样式修改：中间的小球向八个方向移动固定距离
+					var pageX = e.touches[0].pageX-document.body.scrollLeft;
+					var pageY = e.touches[0].pageY-document.body.scrollTop;
+					var offsetX = pageX-ball.r.X;
+					var offsetY = pageY-ball.r.Y;
+					offsetX>30?offsetX=30:offsetX=offsetX;
+					offsetX<-30?offsetX=-30:offsetX=offsetX;
+					offsetY>30?offsetY=30:offsetY=offsetY;
+					offsetY<-30?offsetY=-30:offsetY=offsetY;
+					$('#ball').css({top:offsetY,left:offsetX});
+					//判断是否有计时器，有，停止，无重新滚动屏幕
+					var a = offsetX;
+					var b = offsetY;
+					var aa=Math.abs(a);
+					var bb=Math.abs(b);
+					if(aa>=30||bb>=30){
+						//可以滚屏
+						if(a>0){
+							//down
+							console.log('scrolldown');
+							t = setInterval("scrolldown(t)",50);
+						}else{
+							//up
+							document.body.scrollTop -= 0.5;
+						}
+						if(b>0){
+							//right
+							document.body.scrollLeft += 0.5;
+						}else{
+							//left
+							document.body.scrollLeft -= 0.5;
+						}
+					}else{
+						//存在计时器，停止滚屏，不存在，无操作
+						if(ball.scrollX){
+							clearInterval(ball.scrollX);
+						}
+						if(ball.scrollY){
+							clearInterval(ball.scrollY);
+						}
+					}
+				}
+			});
+			function showInfo(){
+				console.log('滚屏');
+			}
+			$('#ballcontainer').bind('touchend',function(e){
+				e.preventDefault();
+// 				clearInterval(t);
+				//按压开始时计时，即时满2秒可以拖动
+				ball.isTouched = false;
+				ball.isTouchMoved = false;
+				ball.candrag = false;
+				$('#ballcontainer').css('background-color','#e7e7e7');
+				$('#ball').css({top:'10px',left:'10px'});
+			});
+		});
+    </script>
 </head>
 <body>
-	<h2 style="color:#4caf50;" align="center">Hello Screenvd</h2>
+	<h2 style="color:#4caf50;" align="center">Hello Screenvdk</h2>
 	<hr style="border-color: #4caf50;" />
 	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
 	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
@@ -30,12 +191,40 @@
 	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
 	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
 	<hr />
+	<button id="btnMoreContent" style="" onclick="document.getElementById('moreContent').style.display=='none'?document.getElementById('moreContent').style.display='block':document.getElementById('moreContent').style.display='none';">more</button>
+	<div id="moreContent">
 	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
 	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
 	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
 	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
 	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
 	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
-	<div style="position:fixed ; bottom:0px;width:30px;height:30px;border-radius:50%;background-color:#f8f8f8;"></div>
+		<hr />
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+		<hr />
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+		<hr />
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	</div>
+	
+	<div id="ballcontainer" style="position:fixed ; top:50%;right:50px;width:60px;height:60px;border-radius:50%;background-color:#e7e7e7;opacity: 0.9;">
+		<div style="position:relative ; width:40px;top:10px;left:10px;height:40px;border-radius:50%;background-color:#2196F3;opacity: 0.9;" id="ball"></div>
+		<div class=""></div>
+	</div>
 </body>
 </html>
