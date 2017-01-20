@@ -5,20 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Screen Virtual Direction Key Develop Page</title>
+   <link rel="stylesheet" href="files/css/font-awesome.min.css">
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript">
-    function scrolldown(){
-		//到达底部，停止滚动
-		console.log(document.body.scrollTop);
-		var scrollHeight = $(window).scrollTop()+$(window).height();
-		var windowHeight = $(document).height();
-		if(scrollHeight >= windowHeight){
-			console.log('滚动到底了');
-			clearInterval(t);
-		}else{
-			document.body.scrollTop += 1;
-		}
-		}
 		$(function(){
 			document.body.scrollTop = 0;
 			document.body.scrollLeft = 0;
@@ -36,41 +25,9 @@
 				ball.r.Y=pageY;
 				$("#ballcontainer").css({'top':(pageY-30),'right':(screen.width-pageX-30)});
 			};
-			ball.scrollScreen = function(e){
-				var pageX = e.touches[0].pageX;
-				var pageY = e.touches[0].pageY;
-				var offsetX = pageX-ball.r.X;
-				var offsetY = pageY-ball.r.Y;
-				var a = offsetX;
-				var b = offsetY;
-// 				console.log(offsetX + ":" + offsetY);
-				if(b>=0){
-					document.body.scrollTop += 0.3;
-				}else{
-					document.body.scrollTop -= 0.3;
-				}
-// 				if(a>0&&b>0){
-// 					document.body.scrollTop += 0.5;
-// 					document.body.scrollLeft += 0.5;
-// 				}else if(a>0&&b<0){
-// 					document.body.scrollTop += 0.5;
-// 					if(document.body.scrollLeft > 0)
-// 						document.body.scrollLeft -= 0.5;
-// 				}else if(a<0&&b>0){
-// 					if(document.body.scrollTop > 0)
-// 						document.body.scrollTop -= 0.5;
-// 					document.body.scrollLeft += 0.5;
-// 				}else if(a<0&&b<0){
-// 					if(document.body.scrollTop > 0)
-// 						document.body.scrollTop -= 0.5;
-// 					if(document.body.scrollLeft > 0)
-// 						document.body.scrollLeft -= 0.5;
-// 				}
-			};
 			//长按拖动位置
 			$('#ballcontainer').bind('touchstart',function(e){
 				e.preventDefault();
-				//按压开始时计时，计时满2.5秒可以拖动
 				//或是采用双击的形式，两次点击之间时间间隔不能大于300毫秒
 				ball.isTouched = true;
 				ball.isTouchMoved = false;
@@ -84,38 +41,21 @@
 		            ball.dbtouchtimes = 0;
 		            $('#ballcontainer').css('background-color','#2196F3');
 					ball.candrag = true;
+		        }else{
+		        	//显示菜单项
+		        	// TODO--
+		        	$('#menu').css('display')=='block'?$('#menu').css('display',"none"):$('#menu').css('display',"block");
 		        }
-				//--双击--
-				/*
-				var max_time=2000;
-				var now_time=0;
-				//如果处于按压状态且没有移动，则开始计时
-				if(ball.isTouched && !ball.isTouchMoved){
-					t = setInterval(function(){
-						if(max_time <= now_time){
-							//计时截止，可以拖动
-							clearInterval(t);
-							//更改样式
-							console.log(e);
-							$('#ballcontainer').css('background-color','#2196F3');
-							ball.candrag = true;
-						}
-						now_time += 500;
-					}, 500);
-				}*/
+		        
 			});
 			
 			$('#ballcontainer').bind('touchmove',function(e){
 				e.preventDefault();
-// 				clearInterval(t);
-				//按压开始时计时，即时满2秒可以拖动
 				ball.isTouched = true;
 				ball.isTouchMoved = true;
 				if(ball.candrag){
 					ball.movePoit(e);
 				}else{
-					//修改样式，滚动屏幕
-					//样式修改：中间的小球向八个方向移动固定距离
 					var pageX = e.touches[0].pageX-document.body.scrollLeft;
 					var pageY = e.touches[0].pageY-document.body.scrollTop;
 					var offsetX = pageX-ball.r.X;
@@ -125,51 +65,61 @@
 					offsetY>30?offsetY=30:offsetY=offsetY;
 					offsetY<-30?offsetY=-30:offsetY=offsetY;
 					$('#ball').css({top:offsetY,left:offsetX});
-					//判断是否有计时器，有，停止，无重新滚动屏幕
 					var a = offsetX;
 					var b = offsetY;
 					var aa=Math.abs(a);
 					var bb=Math.abs(b);
 					if(aa>=30||bb>=30){
 						//可以滚屏
-						if(a>0){
+						if(b>0){
 							//down
-							console.log('scrolldown');
-							t = setInterval("scrolldown(t)",50);
+								setTimeout(function(){
+									var scrollHeight = $(window).scrollTop()+$(window).height();
+									var windowHeight = $(document).height();
+									if(ball.isTouched&&scrollHeight <= windowHeight){
+										document.body.scrollTop += 1;
+										setTimeout(arguments.callee, 50);
+									}
+								}, 50);
 						}else{
 							//up
-							document.body.scrollTop -= 0.5;
+								setTimeout(function(){
+									var scrollTop = $(window).scrollTop();
+									if(ball.isTouched&&scrollTop>0){
+										document.body.scrollTop -= 1;
+										setTimeout(arguments.callee, 50);
+									}
+								}, 50);
 						}
-						if(b>0){
+						if(a>0){
 							//right
-							document.body.scrollLeft += 0.5;
+// 							document.body.scrollLeft += 0.5;
+							//同上，暂时未实现
 						}else{
 							//left
-							document.body.scrollLeft -= 0.5;
-						}
-					}else{
-						//存在计时器，停止滚屏，不存在，无操作
-						if(ball.scrollX){
-							clearInterval(ball.scrollX);
-						}
-						if(ball.scrollY){
-							clearInterval(ball.scrollY);
+// 							document.body.scrollLeft -= 0.5;
+							//同上，暂时未实现
 						}
 					}
 				}
 			});
-			function showInfo(){
-				console.log('滚屏');
-			}
 			$('#ballcontainer').bind('touchend',function(e){
 				e.preventDefault();
-// 				clearInterval(t);
 				//按压开始时计时，即时满2秒可以拖动
 				ball.isTouched = false;
 				ball.isTouchMoved = false;
 				ball.candrag = false;
 				$('#ballcontainer').css('background-color','#e7e7e7');
 				$('#ball').css({top:'10px',left:'10px'});
+			});
+			$('#menu').bind('touchend',function(e){
+				e.stopPropagation();
+			});
+			$('#menu').bind('touchstart',function(e){
+				e.stopPropagation();
+			});
+			$('#menu').bind('touchmove',function(e){
+				e.stopPropagation();
 			});
 		});
     </script>
@@ -224,7 +174,23 @@
 	
 	<div id="ballcontainer" style="position:fixed ; top:50%;right:50px;width:60px;height:60px;border-radius:50%;background-color:#e7e7e7;opacity: 0.9;">
 		<div style="position:relative ; width:40px;top:10px;left:10px;height:40px;border-radius:50%;background-color:#2196F3;opacity: 0.9;" id="ball"></div>
-		<div class=""></div>
+		<div id="menu" style="display: none;">
+			<div style="position:relative;width:40px;height:40px;border-radius:50%;background-color:#2196F3;top:-100px;left:10px;" id="menutop">
+				<div style="text-align:center;line-height:38px;color:#ffffff">
+					<i class="fa fa-times"></i>
+				</div>
+			</div>
+			<div style="position:relative;width:40px;height:40px;border-radius:50%;background-color:#2196F3;top:-70px;left:-60px;" id="menuleft">
+				<div style="text-align:center;line-height:38px;color:#ffffff">
+					<i class="fa fa-files-o"></i>
+				</div>
+			</div>
+			<div style="position:relative;width:40px;height:40px;border-radius:50%;background-color:#2196F3;bottom:40px;left:10px;" id="menudown">
+				<div style="text-align:center;line-height:38px;color:#ffffff">
+					<i class="fa fa-pencil"></i>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
