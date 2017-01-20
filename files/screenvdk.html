@@ -44,7 +44,11 @@
 		        }else{
 		        	//显示菜单项
 		        	// TODO--
-		        	$('#menu').css('display')=='block'?$('#menu').css('display',"none"):$('#menu').css('display',"block");
+		        	setTimeout(function(){
+			        	if(!ball.isTouchMoved && ball.isTouched){
+				        	$('#menu').css('display')=='block'?$('#menu').css('display',"none"):$('#menu').css('display',"block");
+			        	}
+		        	},500);
 		        }
 		        
 			});
