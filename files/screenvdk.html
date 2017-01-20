@@ -57,6 +57,7 @@
 				e.preventDefault();
 				ball.isTouched = true;
 				ball.isTouchMoved = true;
+				$('#menu').css('display',"none");
 				if(ball.candrag){
 					ball.movePoit(e);
 				}else{
