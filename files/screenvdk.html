@@ -45,7 +45,7 @@
 		        	//显示菜单项
 		        	// TODO--
 		        	setTimeout(function(){
-			        	if(!ball.isTouchMoved && ball.isTouched){
+			        	if(!ball.isTouchMoved && ball.isTouched && !ball.candrag){
 				        	$('#menu').css('display')=='block'?$('#menu').css('display',"none"):$('#menu').css('display',"block");
 			        	}
 		        	},500);
