@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>meto</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+   <style type="text/css">
+       	#back_to_main{
+    		width:100%;
+    		height:50px;
+    		opacity:0.5;
+    		background-color:#66CDAA;
+    		position:fixed;
+    		top:0;
+    		left:0;
+    	}
+       	#back_to_main>div{
+    		position:relative;
+    		top:15px;
+    		left: 15px;
+    	}
+    	.head_img{
+    		max-width: 50px;
+		    border-radius: 50%;
+		    padding: 0px;
+		    position: fixed;
+		    right: 2px;
+		    top: 2px;
+    	}
+    	.panel-footer>.table>tbody>tr>td{
+    		border-top:0px;
+    	}
+    	.style_items>.table>tbody>tr>td{
+    		border-top:0px;
+    	}
+   </style>
+   <script type="text/javascript">
+   	$(function(){
+   		
+   	});
+   </script>
+  </head>
+  <body>
+<div class="container">
+<div id="back_to_main">
+	<div class="col-xs-3 col-sm-2">
+		<span class="fa fa-arrow-left" onclick="history.go(-1);">返回</span>
+	</div>
+	<div class="shop_lili_detail col-xs-8 col-sm-8">
+		<span>丽丽专业美甲</span>
+	</div>
+	<img src="../img/timg.jpg" class="img-thumbnail img-circle pull-right head_img dropdown-toggle" data-toggle="modal"
+					data-target="#shop_detail_lili"></img>
+</div>
+	<div class="modal fade" id="shop_detail_lili">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-body">
+								<span class="text-info">店铺介绍：丽丽专业美甲·提供专业优质的上门美容美甲服务</span>
+							</div>
+							<div class="modal-footer" style="text-align:left;">
+								<span>店铺地址：</span>
+								<address>
+									<strong>丽丽专业美容美甲</strong>
+									状元府小区，27#104室<br/>
+									电话：（123）456-7890
+								</address>
+							</div>
+						</div>
+					</div>
+				</div>
+
+<div class="panel panel-default" id="lili" style="margin-top: 60px;">
+	<div class="panel-heading">
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<td>
+						<img src="../img/cat.png" style="img-circle;max-width:50px;border-radius:50%;"></img>
+					</td>
+					<td>小清新</td>
+					<td>￥:66元</td>
+				</tr>
+				<tr>
+					<td>
+						<img src="../img/cloud.png" style="img-circle;max-width:50px;border-radius:50%;"></img>
+					</td>
+					<td>幻彩</td>
+					<td>￥:88元</td>
+				</tr>
+				<tr>
+					<td>
+						<img src="../img/glass.png" style="img-circle;max-width:50px;border-radius:50%;"></img>
+					</td>
+					<td>炫酷</td>
+					<td>￥:99元</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="panel-body" style="color:#66CDAA;">
+			<span class="img_more">更多</span>
+			<span class="fa fa-arrow-right pull-right"></span>
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<span style="color:#66CDAA;">开始预约</span>
+	</div>
+	<div class="panel-body">
+<form>
+    <fieldset>
+    		<div class="style_items">
+    			<table class="table" style="margin-bottom:0;">
+				<tr>
+					<td><select>
+						<option>选择类型</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select></td>
+					<td><select>
+						<option>选择颜色</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td><select>
+						<option>选择款式</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select></td>
+					<td><select>
+						<option>预约日期</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select></td>
+				</tr>
+			</table>
+    		</div>
+            <div class="form-group">
+                <label>联系电话</label>
+                <input type="text" class="form-control" placeholder="请输入你的电话..."/>
+            </div>
+            <div class="form-group">
+                <label>备注</label>
+                <textarea  class="form-control" placeholder="详细说明"></textarea>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox">上门美甲</label>
+            </div>
+    </fieldset>
+	<table class="table" style="margin-bottom:0;">
+		<tr>
+			<td></td>
+			<td><button class="btn btn-info">预约</button></td>
+			<td><button class="btn btn-danger" type="reset">重选</button></td>
+			<td></td>
+		</tr>
+	</table>
+</form>
+	</div>
+	<div class="panel-footer">
+		<small style="color:#66CDAA;">我们将准时到达为您提供专业优质的服务，如您临时需要更改预约内容，烦请提前告知。</small>
+	</div>
+</div>
+</div>
+</body>
+</html>

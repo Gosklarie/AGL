@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>meto</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <style type="text/css">
+.container{
+	padding-right: 5px;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+.table {
+	top: 15px;
+}
+
+.fa {
+	color: #66CDAA;
+}
+
+.table>tbody>tr>td {
+	border: 1px solid #f0f8ff;
+	padding: 5px;
+	color: gray;
+	background-color: #f0f8ff;
+	border-radius: 5%;
+	width: 80px;
+	text-align: center;
+}
+.classfy_items{
+	width: 100%;
+    height: 200px;
+    border: 1px solid #66cdaa;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+}
+.classfy_items_page{
+	text-align: center;
+    height: 20px;
+    position: relative;
+    bottom: -40px;
+}
+.panel-heading{
+	font-family: "楷体";
+	font-size:12px;
+}
+#ignore_message>.btn{
+	border:0;
+}
+</style>
+  </head>
+  <body>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+		$(function(){
+			$('.message_detail').on('touchend',function(){
+				var url = $(this).attr('data-url');
+				var p = window.parent.document;
+				p.location=url;
+			});
+		});
+    </script>
+<div class="container">
+<!-- 分类 -->
+<div class="classfy_items">
+		<table class="table col-xs-12 col-sm-12">
+		<tr>
+			<td class="current" data-url="maincontent.html">
+			<span class="fa fa-coffee fa-lg"></span><br/>
+			<span style="font-size:12px;">美食</span>
+		</td>
+			<td  data-url="footsy.html">
+			<span class="fa fa-film fa-lg"></span><br/>
+			<span style="font-size:12px;">娱乐</span>
+		</td>
+			<td  data-url="mine.html">
+			<span class="fa fa-car fa-lg"></span><br/>
+			<span style="font-size:12px;">汽车</span>
+		</td>
+			<td  data-url="morecontent.html">
+			<span class="fa fa-paint-brush fa-lg"></span><br/>
+			<span style="font-size:12px;">美容</span>
+		</td>
+		</tr>
+		<tr>
+			<td class="current" data-url="maincontent.html">
+			<span class="fa fa-book fa-lg"></span><br/>
+			<span style="font-size:12px;">读书</span>
+		</td>
+			<td  data-url="footsy.html">
+			<span class="fa fa-television fa-lg"></span><br/>
+			<span style="font-size:12px;">家电</span>
+		</td>
+			<td  data-url="mine.html">
+			<span class="fa fa-graduation-cap fa-lg"></span><br/>
+			<span style="font-size:12px;">培训</span>
+		</td>
+			<td  data-url="morecontent.html">
+			<span class="fa fa-briefcase fa-lg"></span><br/>
+			<span style="font-size:12px;">箱包</span>
+		</td>
+		</tr>
+	</table>
+	<div class="classfy_items_page">
+		<span class="fa fa-circle"></span>
+		<span class="fa fa-circle-o"></span>
+	</div>
+</div>
+<hr/>
+	<div class="panel panel-default" id="lili">
+		<div class="panel-heading">
+			<span class="panel-heading-title">有人</span><span style="font-size:14px;color:#66cdaa;">@</span><span>你：</span>
+			<span>丽丽专业美甲</span>
+			<div class="btn-group pull-right">
+				<span class=" fa fa-ellipsis-v dropdown-toggle" data-toggle="dropdown" style="font-size:16px;"></span>
+				<!-- 做一个下拉菜单 -->
+				<ul class="dropdown-menu">
+					<li>
+						<div id="ignore_message" style="text-align:center;">
+							<span class="btn btn-default" ontouchend="$('#lili').hide()">不再提醒</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div>
+				<img src="img/timg.jpg" class="img-thumbnail">
+				<blockquote>
+					<p>爱尚·小清新，回馈新老客户，新款最高五折，赶快约我吧。</p>
+					<small><cite>丽丽专业美甲·提供专业优质的上门美容美甲服务</cite></small>
+				</blockquote>
+			</div>
+			<div class="btn-group pull-right">
+				<span class="message_detail" style="font-size:12px;color:#66cdaa;" data-url="careshops/lili.html">详情</span>
+				<span class="fa fa-angle-double-right" style="font-size:16px;"></span>
+			</div>
+		</div>
+	</div>
+<hr/>
+	<div class="panel panel-default" id="panel_books">
+		<div class="panel-heading">
+			<span class="panel-heading-title">图书</span><span style="font-size:14px;color:#66cdaa;">更新</span>
+			<span>第三章</span>
+			<div class="btn-group pull-right">
+				<span class=" fa fa-ellipsis-v dropdown-toggle" data-toggle="dropdown" style="font-size:16px;"></span>
+				<!-- 做一个下拉菜单 -->
+				<ul class="dropdown-menu">
+					<li>
+						<div id="ignore_message" style="text-align:center;">
+							<span class="btn btn-default" ontouchend="$('#panel_books').hide()">不再提醒</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div class="character_outline">
+				<p style="text-indent:2em;font-family: '楷体';font-size:12px;">
+					随着网络技术的发展，和人们消费观念的转变，网络营销已经进入新纪元。人们可以足不出户，就能享受到美食，欣赏美景，购买衣物……但是部分行业的实体店模式仍未受到摇撼，比如，美容、汽车保养、大众护理，这些仍然需要人们走出来，到附近的店铺进行消费
+					但是，这些行业都是可以提供上门服务的，上门服务不仅能够稳固客源，更能优化用户体验。相信在不久的将来，人们完全可以租一个人作为自己的代理，在社会中扮演自己的角色。更远一些，就是代理机器人了。
+				</p>	
+			</div>
+			<div class="btn-group pull-right">
+				<span class="message_detail" style="font-size:12px;color:#66cdaa;" data-url="books/showbooksnewcharacter.html">详情</span>
+				<span class="fa fa-angle-double-right" style="font-size:16px;"></span>
+			</div>
+		</div>
+	</div>
+	<div class="loading_next" style="text-align:center;display:none;">
+		<span class="fa fa-refresh fa-spin fa-fw"></span><span style="font-size:12px;color:#66cdaa">loading ...</span>
+	</div>
+	</div>
+<!-- 我的关注 -->
+<!-- 美甲 -->
+<!-- 点击查看详情 -->
+<!-- 读书 -->
+</body>
+</html>

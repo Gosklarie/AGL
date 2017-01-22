@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>meto</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<style type="text/css">
+.head {
+	height: 50px;
+	background-color: #66CDAA;
+}
+.head>div{
+	padding-top:10px;
+}
+
+
+#head_position {
+	background-color: #66CDAA;
+	border: 0px;
+/* 	padding-top:15px;  */
+	color: #FFFFFF;
+}
+
+.btn-toolbar {
+	padding-top: 15px;
+}
+
+.modal {
+	padding-top: 60px;
+}
+
+.table>tbody>tr>td {
+	border-top: 0px;
+}
+
+.table>tbody>tr>td>label.current {
+	border: 1px solid #00bcd4;
+	color: #00bcd4;
+}
+
+.table>tbody>tr>td>label {
+	border: 1px solid #f0f8ff;
+	padding: 5px;
+	color: gray;
+	background-color: #f0f8ff;
+	border-radius: 5%;
+	width: 80px;
+	text-align: center;
+}
+.fa-map-marker, .fa-square-o{
+	color:#FFFFFF;
+}
+.navbar-fixed-bottom{
+	background-color:#66CDAA;
+}
+.navbar-fixed-bottom>table>tbody>tr>td{
+	text-align:center;
+	color:#ffffff;
+}
+.navbar-fixed-bottom>table>tbody>tr>.current{
+	text-align:center;
+	color:#009688;
+}
+.navbar-fixed-bottom>table{
+	top:5px;
+}
+.badge-danger{
+	background-color:#FF0000;
+	margin-top: -15px;
+}
+iframe{
+    width: 100%;
+    border: 0;
+}
+</style>
+<script type="text/javascript">
+		$(function(){
+			var window_height = $(window).height();
+			$('iframe').css('height',window_height-100);
+			var $position_detail_labels = $('#position_detail>.modal-dialog>.modal-content>.modal-body>.table>tbody>tr>td>label');
+			$position_detail_labels.bind('touchstart',function(e){
+				$position_detail_labels.removeClass('current');
+				$(this).addClass('current');
+			});
+			
+			var $navbar_footer_table = $('.navbar-fixed-bottom>table>tbody>tr>td');
+			$navbar_footer_table.bind('touchstart',function(e){
+				$navbar_footer_table.removeClass('current');
+				$(this).addClass('current');
+				if($('iframe').attr('src') != $(this).attr('data-url'))
+					$('iframe').attr('src',$(this).attr('data-url'));
+			});
+			
+			$('#position_detail').on('hidden.bs.modal',function(e){
+				var selectposition = $('#position_detail>.modal-dialog>.modal-content>.modal-body>.table>tbody>tr>td>label.current').text();
+				if(selectposition){
+					selectposition += "<span class='caret'></span>";
+					$('#head_position').html(selectposition);
+					//TODO 刷新预加载数据。。。
+				}
+			});
+			$(window).on('scroll',function(){
+				console.log(document.body.scrollTop);
+			});
+		});
+    </script>
+</head>
+<body>
+	<div class="container">
+		<div class="row head">
+			<div class="col-xs-2 col-sm-2">
+				<button id="head_position" type="button"
+					class="btn col-sm-2 dropdown-toggle" data-toggle="modal"
+					data-target="#position_detail">
+					上海<span class="caret"></span>
+				</button>
+				<div class="modal fade" id="position_detail">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-body">
+								<table class="table" id="table_position_detail">
+									<tr>
+										<td><label>全城</label></td>
+										<td><label>卢湾区</label></td>
+										<td><label>徐汇区</label></td>
+									</tr>
+									<tr>
+										<td><label>静安区</label></td>
+										<td><label>长宁区</label></td>
+										<td><label>浦东新区</label></td>
+									</tr>
+									<tr>
+										<td><label>黄浦区</label></td>
+										<td><label>普陀区</label></td>
+										<td><label>闸北区</label></td>
+									</tr>
+									<tr>
+										<td><label>虹口区</label></td>
+										<td><label>杨浦区</label></td>
+										<td><label>闵行区</label></td>
+									</tr>
+									<tr>
+										<td><label>宝山区</label></td>
+										<td><label>奉贤区</label></td>
+										<td><label>金山区</label></td>
+									</tr>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<span class=" current_position pull-left">您当前位置：<label
+									class="text-muted">上海</label></span> <label
+									class="text-muted pull-right"
+									onclick="alert('sorry，i’m working!')"><small>切换<span
+										class="fa fa-chevron-right"></span></small></label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-1 col-sm-1"></div>
+			<div class="col-xs-7 col-sm-7">
+				<div class="input-group">
+					<span class="input-group-addon" style="background-color: #66c2aa;"><span class="fa fa-search"></span></span>
+					<input class="form-control" type="text" placeholder="输入商家、分类" style="background-color: #66c2aa;">
+				</div>
+			</div>
+
+			<div class="col-xs-1 col-sm-1">
+				<span class="fa-stack"> <i
+					class="fa fa-square-o fa-stack-2x"></i> <i
+					class="fa fa-map-marker fa-stack-1x"></i>
+				</span>
+			</div>
+		</div>
+	</div>
+
+<div class="content">
+	<iframe src="maincontent.html"></iframe>
+</div>
+
+<!-- 底部导航 -->
+<div class="navbar navbar-default navbar-fixed-bottom">
+	<table class="tabel col-xs-12 col-sm-12">
+		<tr>
+			<td class="current" data-url="maincontent.html"><!-- 首页 -->
+			<span class="fa fa-home fa-lg"></span><br/>
+			<span style="font-size:12px;">首页</span>
+		</td>
+			<td  data-url="footsy.html"><!-- 足迹 -->
+			<span class="fa fa-paw fa-lg"></span><br/>
+			<span style="font-size:12px;">足迹</span>
+		</td>
+			<td  data-url="mine.html"><!-- 我的 -->
+			<span class="fa fa-user fa-lg"></span><br/><!-- fa fa-arrow-circle-o-up -->
+			<span style="font-size:12px;">我的</span>
+			<span class="fa fa-arrow-circle-o-up fa-lg" style="display:none;"></span>
+		</td>
+			<td  data-url="morecontent.html"><!-- 更多 -->
+			<span class="fa fa-bars fa-lg"></span><br/>
+			<span style="font-size:12px;">更多</span>
+		</td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>welcome to meto</title>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+		$(function(){
+			$('body').css('background-position-y',$(window).height()/2 + 'px');
+			setTimeout(function(){
+				var $stepover_time = $('.stepover_time');
+				var value = Number($stepover_time.text());
+				if(value > 0){
+					$stepover_time.text(--value);
+					if(value == 0){
+						setTimeout(arguments.callee,300);				
+					}else{
+						setTimeout(arguments.callee,1000);
+					}
+				}else{
+					document.location.href="maintain.html";
+				}
+			},1000);
+			$('#stepover_label').bind('touchend',function(){
+				document.location.href="maintain.html";
+			});
+		});
+    </script>
+    <style type="text/css">
+body {
+	background-color: #99c4a8;
+	background-image: url('img/loading.png');
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.stepover_container {
+	color: #fff;
+	border: 1px solid rgba(158, 158, 158, 0.36);
+	width: 55px;
+	right: 10px;
+	position: fixed;
+	top: 10px;
+	border-radius: 10%;
+}
+
+.stepover_container:active{
+	background-color:#82c4a8;
+}
+</style>
+  </head>
+  <body>
+<div class="stepover_container">
+	<label id="stepover_label">跳过</label>
+	<label class="stepover_time">3</label>
+</div>
+</body>
+</html>

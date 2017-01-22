@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="pc page-ready" data-dpr="1" style="font-size: 20px;">
+<head>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Screen Virtual Direction Key Develop Page</title>
+   <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+		$(function(){
+			document.body.scrollTop = 0;
+			document.body.scrollLeft = 0;
+			var ball=$("#ballcontainer")[0];
+			ball.dbtouchtimes=0;
+			ball.r={};
+			ball.r.Y = ball.offsetTop + 30;
+			ball.r.X = ball.offsetLeft + 30;
+			ball.scrollX;
+			ball.scrollY;
+			ball.movePoit = function(e){
+				var pageX = e.touches[0].pageX;
+				var pageY = e.touches[0].pageY;
+				ball.r.x=pageX;
+				ball.r.Y=pageY;
+				$("#ballcontainer").css({'top':(pageY-30),'right':(screen.width-pageX-30)});
+			};
+			//长按拖动位置
+			$('#ballcontainer').bind('touchstart',function(e){
+				e.preventDefault();
+				//或是采用双击的形式，两次点击之间时间间隔不能大于300毫秒
+				ball.isTouched = true;
+				ball.isTouchMoved = false;
+				var dbstate = false;
+				//--双击--
+				ball.dbtouchtimes++;
+		        setTimeout(function () {
+		        	ball.dbtouchtimes = 0;
+		        }, 300);
+		        if (ball.dbtouchtimes > 1) {
+		            ball.dbtouchtimes = 0;
+		            $('#ballcontainer').css('background-color','#2196F3');
+					ball.candrag = true;
+		        }else{
+		        	//显示菜单项
+		        	// TODO--
+		        	setTimeout(function(){
+			        	if(!ball.isTouchMoved && ball.isTouched&&!ball.candrag){
+				        	$('#menu').css('display')=='block'?$('#menu').css('display',"none"):$('#menu').css('display',"block");
+			        	}
+		        	},500);
+		        }
+		        
+			});
+			
+			$('#ballcontainer').bind('touchmove',function(e){
+				e.preventDefault();
+				ball.isTouched = true;
+				ball.isTouchMoved = true;
+				$('#menu').css('display',"none");
+				if(ball.candrag){
+					ball.movePoit(e);
+				}else{
+					var pageX = e.touches[0].pageX-document.body.scrollLeft;
+					var pageY = e.touches[0].pageY-document.body.scrollTop;
+					var offsetX = pageX-ball.r.X;
+					var offsetY = pageY-ball.r.Y;
+					offsetX>30?offsetX=30:offsetX=offsetX;
+					offsetX<-30?offsetX=-30:offsetX=offsetX;
+					offsetY>30?offsetY=30:offsetY=offsetY;
+					offsetY<-30?offsetY=-30:offsetY=offsetY;
+					$('#ball').css({top:offsetY,left:offsetX});
+					var a = offsetX;
+					var b = offsetY;
+					var aa=Math.abs(a);
+					var bb=Math.abs(b);
+					if(aa>=30||bb>=30){
+						//可以滚屏
+						if(b>0){
+							//down
+								setTimeout(function(){
+									var scrollHeight = $(window).scrollTop()+$(window).height();
+									var windowHeight = $(document).height();
+									if(ball.isTouched&&scrollHeight <= windowHeight){
+										document.body.scrollTop += 1;
+										setTimeout(arguments.callee, 50);
+									}
+								}, 50);
+						}else{
+							//up
+								setTimeout(function(){
+									var scrollTop = $(window).scrollTop();
+									if(ball.isTouched&&scrollTop>0){
+										document.body.scrollTop -= 1;
+										setTimeout(arguments.callee, 50);
+									}
+								}, 50);
+						}
+						if(a>0){
+							//right
+// 							document.body.scrollLeft += 0.5;
+							//同上，暂时未实现
+						}else{
+							//left
+// 							document.body.scrollLeft -= 0.5;
+							//同上，暂时未实现
+						}
+					}
+				}
+			});
+			$('#ballcontainer').bind('touchend',function(e){
+				e.preventDefault();
+				//按压开始时计时，即时满2秒可以拖动
+				ball.isTouched = false;
+				ball.isTouchMoved = false;
+				ball.candrag = false;
+				$('#ballcontainer').css('background-color','#e7e7e7');
+				$('#ball').css({top:'10px',left:'10px'});
+			});
+			$('#menu').bind('touchend',function(e){
+				e.stopPropagation();
+			});
+			$('#menu').bind('touchstart',function(e){
+				e.stopPropagation();
+			});
+			$('#menu').bind('touchmove',function(e){
+				e.stopPropagation();
+			});
+		});
+    </script>
+    <style type="text/css">
+    	#back_to_main{
+    		width:100%;
+    		height:50px;
+    		opacity:0.5;
+    		background-color:#66CDAA;
+    		position:fixed;
+    		top:0;
+    		left:0;
+    	}
+    	#back_to_main>div{
+    		position:relative;
+    		top:15px;
+    		left: 15px;
+    	}
+    	body{
+    		background-color:#f0f8ff;
+    	}
+    </style>
+</head>
+<body>
+<div id="back_to_main">
+	<div>
+		<span class="fa fa-arrow-left" onclick="history.go(-1);">返回</span>
+	</div>
+</div>
+	<h2 style="color:#4caf50;" align="center">第三章</h2>
+	<hr style="border-color: #4caf50;" />
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<hr />
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<hr />
+	<button id="btnMoreContent" style="" onclick="document.getElementById('moreContent').style.display=='none'?document.getElementById('moreContent').style.display='block':document.getElementById('moreContent').style.display='none';">more</button>
+	<div id="moreContent">
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+		<hr />
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+		<hr />
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+		<hr />
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	<p>空山新雨后，天气晚来秋。明月松间照，清泉石上流。</p>
+	<p>竹喧归浣女，莲动下渔舟。随意春芳歇，王孙自可留。</p>
+	</div>
+	
+	<div id="ballcontainer" style="position:fixed ; top:50%;right:50px;width:60px;height:60px;border-radius:50%;background-color:#e7e7e7;opacity: 0.9;">
+		<div style="position:relative ; width:40px;top:10px;left:10px;height:40px;border-radius:50%;background-color:#2196F3;opacity: 0.9;" id="ball"></div>
+		<div id="menu" style="display: none;">
+			<div style="position:relative;width:40px;height:40px;border-radius:50%;background-color:#2196F3;top:-100px;left:10px;" id="menutop">
+				<div style="text-align:center;line-height:38px;color:#ffffff">
+					<i class="fa fa-times"></i>
+				</div>
+			</div>
+			<div style="position:relative;width:40px;height:40px;border-radius:50%;background-color:#2196F3;top:-70px;left:-60px;" id="menuleft">
+				<div style="text-align:center;line-height:38px;color:#ffffff">
+					<i class="fa fa-files-o"></i>
+				</div>
+			</div>
+			<div style="position:relative;width:40px;height:40px;border-radius:50%;background-color:#2196F3;bottom:40px;left:10px;" id="menudown">
+				<div style="text-align:center;line-height:38px;color:#ffffff">
+					<i class="fa fa-pencil"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
