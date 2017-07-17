@@ -1,0 +1,1374 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Oracle State说明</title>
+<script type="text/javascript">
+var nextIndex = 0;  
+//上一次需要查找的字符串
+var searchValue = '';  
+  
+function findInPage(targetEle,searchText) {  
+    //判断搜索条件是否已经改变
+    if(searchText && searchText != searchValue && nextIndex > 0){  
+        searchValue = searchText;  
+        nextIndex = 0;  
+    }else{  
+        searchValue = searchText;  
+    }  
+  
+    if (document.all) {  
+        txt = targetEle.createTextRange();  
+        //搜索str
+        var found = '';  
+        //查找第nextIndex个的字符串。之所以要用循环，是因为TextRange对象每次都是新生成的，所以查找初始位置每次都会还原。那么要查找第n次出现的字符串，就需要调用findText()方法多次，且每次查找都要重新设置开始位置和结束位置。
+        for (i = 0; i <= nextIndex && (found = txt.findText(searchValue))==true; i++) {  
+            txt.moveStart("character", 1);  
+            txt.moveEnd("textedit");  
+        }  
+        //选中本次查找的字符串
+        if (found) {  
+                               //这里设置为-1，表示为倒序查找。之所以要这样做，是因为此时我们已经查找到了第nextIndex出现的字符串，那么此时如果设置为倒序查找，且将开始位置设置为末尾，那么此时调用findText()方法查找，则会刚好查到我们上一次查到的字符串
+            txt.moveStart("character", -1);  
+            txt.findText(searchValue);  
+            txt.select();  
+                               //滚动屏幕到合适位置
+            txt.scrollIntoView();  
+            nextIndex++;  
+        }else{  
+            //循环查找
+            if (nextIndex > 0) {   
+                nextIndex = 0;   
+                findInPage(searchValue);   
+            }  
+        }  
+    }else{  
+        //谷歌循环查找
+        window.find(searchValue,false,true);  
+    }  
+}
+</script>
+</head>
+<body>
+<div>
+	<input type="text" id="searchValue" style="width:90%;margin-left:5%;position: fixed;"/>
+	<button style="position: absolute;
+    right: 65px;
+    width: 60px;
+    height: 20;
+    overflow: hidden;position: fixed;" onClick="findInPage('',document.getElementById('searchValue').value)">查找</button>
+	<h3 align='center' style="position:fixed;">SQL State</h3>
+</div>
+	
+	<table class="Informal" title="SQLSTATE Codes" summary="SQLSTATE Codes" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t2">Code</th>
+<th align="left" valign="bottom" id="r1c2-t2">Condition</th>
+<th align="left" valign="bottom" id="r1c3-t2">Oracle Error</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t2" headers="r1c1-t2">
+<p class="synopsis">00000</p>
+</td>
+<td align="left" headers="r2c1-t2 r1c2-t2">
+<p class="synopsis">successful completion</p>
+</td>
+<td align="left" headers="r2c1-t2 r1c3-t2">
+<p class="synopsis">ORA-00000</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t2" headers="r1c1-t2">
+<p class="synopsis">01000</p>
+</td>
+<td align="left" headers="r3c1-t2 r1c2-t2">
+<p class="synopsis">warning</p>
+</td>
+<td align="left" headers="r3c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t2" headers="r1c1-t2">
+<p class="synopsis">01001</p>
+</td>
+<td align="left" headers="r4c1-t2 r1c2-t2">
+<p class="synopsis">cursor operation conflict</p>
+</td>
+<td align="left" headers="r4c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t2" headers="r1c1-t2">
+<p class="synopsis">01002</p>
+</td>
+<td align="left" headers="r5c1-t2 r1c2-t2">
+<p class="synopsis">disconnect error</p>
+</td>
+<td align="left" headers="r5c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t2" headers="r1c1-t2">
+<p class="synopsis">01003</p>
+</td>
+<td align="left" headers="r6c1-t2 r1c2-t2">
+<p class="synopsis">null value eliminated in set function</p>
+</td>
+<td align="left" headers="r6c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t2" headers="r1c1-t2">
+<p class="synopsis">01004</p>
+</td>
+<td align="left" headers="r7c1-t2 r1c2-t2">
+<p class="synopsis">string data - right truncation</p>
+</td>
+<td align="left" headers="r7c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t2" headers="r1c1-t2">
+<p class="synopsis">01005</p>
+</td>
+<td align="left" headers="r8c1-t2 r1c2-t2">
+<p class="synopsis">insufficient item descriptor areas</p>
+</td>
+<td align="left" headers="r8c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r9c1-t2" headers="r1c1-t2">
+<p class="synopsis">01006</p>
+</td>
+<td align="left" headers="r9c1-t2 r1c2-t2">
+<p class="synopsis">privilege not revoked</p>
+</td>
+<td align="left" headers="r9c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r10c1-t2" headers="r1c1-t2">
+<p class="synopsis">01007</p>
+</td>
+<td align="left" headers="r10c1-t2 r1c2-t2">
+<p class="synopsis">privilege not granted</p>
+</td>
+<td align="left" headers="r10c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r11c1-t2" headers="r1c1-t2">
+<p class="synopsis">01008</p>
+</td>
+<td align="left" headers="r11c1-t2 r1c2-t2">
+<p class="synopsis">implicit zero-bit padding</p>
+</td>
+<td align="left" headers="r11c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r12c1-t2" headers="r1c1-t2">
+<p class="synopsis">01009</p>
+</td>
+<td align="left" headers="r12c1-t2 r1c2-t2">
+<p class="synopsis">search condition too long for info schema</p>
+</td>
+<td align="left" headers="r12c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r13c1-t2" headers="r1c1-t2">
+<p class="synopsis">0100A</p>
+</td>
+<td align="left" headers="r13c1-t2 r1c2-t2">
+<p class="synopsis">query expression too long for info schema</p>
+</td>
+<td align="left" headers="r13c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r14c1-t2" headers="r1c1-t2">
+<p class="synopsis">02000</p>
+</td>
+<td align="left" headers="r14c1-t2 r1c2-t2">
+<p class="synopsis">no data</p>
+</td>
+<td align="left" headers="r14c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01095</p>
+<p class="synopsis">ORA-01403</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r15c1-t2" headers="r1c1-t2">
+<p class="synopsis">07000</p>
+</td>
+<td align="left" headers="r15c1-t2 r1c2-t2">
+<p class="synopsis">dynamic SQL error</p>
+</td>
+<td align="left" headers="r15c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r16c1-t2" headers="r1c1-t2">
+<p class="synopsis">07001</p>
+</td>
+<td align="left" headers="r16c1-t2 r1c2-t2">
+<p class="synopsis">using clause does not match parameter specs</p>
+</td>
+<td align="left" headers="r16c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r17c1-t2" headers="r1c1-t2">
+<p class="synopsis">07002</p>
+</td>
+<td align="left" headers="r17c1-t2 r1c2-t2">
+<p class="synopsis">using clause does not match target specs</p>
+</td>
+<td align="left" headers="r17c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r18c1-t2" headers="r1c1-t2">
+<p class="synopsis">07003</p>
+</td>
+<td align="left" headers="r18c1-t2 r1c2-t2">
+<p class="synopsis">cursor specification cannot be executed</p>
+</td>
+<td align="left" headers="r18c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r19c1-t2" headers="r1c1-t2">
+<p class="synopsis">07004</p>
+</td>
+<td align="left" headers="r19c1-t2 r1c2-t2">
+<p class="synopsis">using clause required for dynamic parameters</p>
+</td>
+<td align="left" headers="r19c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r20c1-t2" headers="r1c1-t2">
+<p class="synopsis">07005</p>
+</td>
+<td align="left" headers="r20c1-t2 r1c2-t2">
+<p class="synopsis">prepared statement not a cursor specification</p>
+</td>
+<td align="left" headers="r20c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r21c1-t2" headers="r1c1-t2">
+<p class="synopsis">07006</p>
+</td>
+<td align="left" headers="r21c1-t2 r1c2-t2">
+<p class="synopsis">restricted datatype attribute violation</p>
+</td>
+<td align="left" headers="r21c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r22c1-t2" headers="r1c1-t2">
+<p class="synopsis">07007</p>
+</td>
+<td align="left" headers="r22c1-t2 r1c2-t2">
+<p class="synopsis">using clause required for result fields</p>
+</td>
+<td align="left" headers="r22c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r23c1-t2" headers="r1c1-t2">
+<p class="synopsis">07008</p>
+</td>
+<td align="left" headers="r23c1-t2 r1c2-t2">
+<p class="synopsis">invalid descriptor count</p>
+</td>
+<td align="left" headers="r23c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02126</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r24c1-t2" headers="r1c1-t2">
+<p class="synopsis">07009</p>
+</td>
+<td align="left" headers="r24c1-t2 r1c2-t2">
+<p class="synopsis">invalid descriptor index</p>
+</td>
+<td align="left" headers="r24c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r25c1-t2" headers="r1c1-t2">
+<p class="synopsis">08000</p>
+</td>
+<td align="left" headers="r25c1-t2 r1c2-t2">
+<p class="synopsis">connection exception</p>
+</td>
+<td align="left" headers="r25c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r26c1-t2" headers="r1c1-t2">
+<p class="synopsis">08001</p>
+</td>
+<td align="left" headers="r26c1-t2 r1c2-t2">
+<p class="synopsis">SQL client unable to establish SQL connection</p>
+</td>
+<td align="left" headers="r26c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r27c1-t2" headers="r1c1-t2">
+<p class="synopsis">08002</p>
+</td>
+<td align="left" headers="r27c1-t2 r1c2-t2">
+<p class="synopsis">connection name in use</p>
+</td>
+<td align="left" headers="r27c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r28c1-t2" headers="r1c1-t2">
+<p class="synopsis">08003</p>
+</td>
+<td align="left" headers="r28c1-t2 r1c2-t2">
+<p class="synopsis">connection does not exist</p>
+</td>
+<td align="left" headers="r28c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02121</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r29c1-t2" headers="r1c1-t2">
+<p class="synopsis">08004</p>
+</td>
+<td align="left" headers="r29c1-t2 r1c2-t2">
+<p class="synopsis">SQL server rejected SQL connection</p>
+</td>
+<td align="left" headers="r29c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r30c1-t2" headers="r1c1-t2">
+<p class="synopsis">08006</p>
+</td>
+<td align="left" headers="r30c1-t2 r1c2-t2">
+<p class="synopsis">connection failure</p>
+</td>
+<td align="left" headers="r30c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r31c1-t2" headers="r1c1-t2">
+<p class="synopsis">08007</p>
+</td>
+<td align="left" headers="r31c1-t2 r1c2-t2">
+<p class="synopsis">transaction resolution unknown</p>
+</td>
+<td align="left" headers="r31c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r32c1-t2" headers="r1c1-t2">
+<p class="synopsis">0A000</p>
+</td>
+<td align="left" headers="r32c1-t2 r1c2-t2">
+<p class="synopsis">feature not supported</p>
+</td>
+<td align="left" headers="r32c1-t2 r1c3-t2">
+<p class="synopsis">ORA-03000 .. 03099</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r33c1-t2" headers="r1c1-t2">
+<p class="synopsis">0A001</p>
+</td>
+<td align="left" headers="r33c1-t2 r1c2-t2">
+<p class="synopsis">multiple server transactions</p>
+</td>
+<td align="left" headers="r33c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r34c1-t2" headers="r1c1-t2">
+<p class="synopsis">21000</p>
+</td>
+<td align="left" headers="r34c1-t2 r1c2-t2">
+<p class="synopsis">cardinality violation</p>
+</td>
+<td align="left" headers="r34c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01427</p>
+<p class="synopsis">SQL-02112</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r35c1-t2" headers="r1c1-t2">
+<p class="synopsis">22000</p>
+</td>
+<td align="left" headers="r35c1-t2 r1c2-t2">
+<p class="synopsis">data exception</p>
+</td>
+<td align="left" headers="r35c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r36c1-t2" headers="r1c1-t2">
+<p class="synopsis">22001</p>
+</td>
+<td align="left" headers="r36c1-t2 r1c2-t2">
+<p class="synopsis">string data - right truncation</p>
+</td>
+<td align="left" headers="r36c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01401</p>
+<p class="synopsis">ORA-01406</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r37c1-t2" headers="r1c1-t2">
+<p class="synopsis">22002</p>
+</td>
+<td align="left" headers="r37c1-t2 r1c2-t2">
+<p class="synopsis">null value - no indicator parameter</p>
+</td>
+<td align="left" headers="r37c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01405</p>
+<p class="synopsis">SQL-02124</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r38c1-t2" headers="r1c1-t2">
+<p class="synopsis">22003</p>
+</td>
+<td align="left" headers="r38c1-t2 r1c2-t2">
+<p class="synopsis">numeric value out of range</p>
+</td>
+<td align="left" headers="r38c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01426</p>
+<p class="synopsis">ORA-01438</p>
+<p class="synopsis">ORA-01455</p>
+<p class="synopsis">ORA-01457</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r39c1-t2" headers="r1c1-t2">
+<p class="synopsis">22005</p>
+</td>
+<td align="left" headers="r39c1-t2 r1c2-t2">
+<p class="synopsis">error in assignment</p>
+</td>
+<td align="left" headers="r39c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r40c1-t2" headers="r1c1-t2">
+<p class="synopsis">22007</p>
+</td>
+<td align="left" headers="r40c1-t2 r1c2-t2">
+<p class="synopsis">invalid date-time format</p>
+</td>
+<td align="left" headers="r40c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r41c1-t2" headers="r1c1-t2">
+<p class="synopsis">22008</p>
+</td>
+<td align="left" headers="r41c1-t2 r1c2-t2">
+<p class="synopsis">date-time field overflow</p>
+</td>
+<td align="left" headers="r41c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01800 .. 01899</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r42c1-t2" headers="r1c1-t2">
+<p class="synopsis">22009</p>
+</td>
+<td align="left" headers="r42c1-t2 r1c2-t2">
+<p class="synopsis">invalid time zone displacement value</p>
+</td>
+<td align="left" headers="r42c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r43c1-t2" headers="r1c1-t2">
+<p class="synopsis">22011</p>
+</td>
+<td align="left" headers="r43c1-t2 r1c2-t2">
+<p class="synopsis">substring error</p>
+</td>
+<td align="left" headers="r43c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r44c1-t2" headers="r1c1-t2">
+<p class="synopsis">22012</p>
+</td>
+<td align="left" headers="r44c1-t2 r1c2-t2">
+<p class="synopsis">division by zero</p>
+</td>
+<td align="left" headers="r44c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01476</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r45c1-t2" headers="r1c1-t2">
+<p class="synopsis">22015</p>
+</td>
+<td align="left" headers="r45c1-t2 r1c2-t2">
+<p class="synopsis">interval field overflow</p>
+</td>
+<td align="left" headers="r45c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r46c1-t2" headers="r1c1-t2">
+<p class="synopsis">22018</p>
+</td>
+<td align="left" headers="r46c1-t2 r1c2-t2">
+<p class="synopsis">invalid character value for cast</p>
+</td>
+<td align="left" headers="r46c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r47c1-t2" headers="r1c1-t2">
+<p class="synopsis">22019</p>
+</td>
+<td align="left" headers="r47c1-t2 r1c2-t2">
+<p class="synopsis">invalid escape character</p>
+</td>
+<td align="left" headers="r47c1-t2 r1c3-t2">
+<p class="synopsis">ORA-00911</p>
+<p class="synopsis">ORA-01425</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r48c1-t2" headers="r1c1-t2">
+<p class="synopsis">22021</p>
+</td>
+<td align="left" headers="r48c1-t2 r1c2-t2">
+<p class="synopsis">character not in repertoire</p>
+</td>
+<td align="left" headers="r48c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r49c1-t2" headers="r1c1-t2">
+<p class="synopsis">22022</p>
+</td>
+<td align="left" headers="r49c1-t2 r1c2-t2">
+<p class="synopsis">indicator overflow</p>
+</td>
+<td align="left" headers="r49c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01411</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r50c1-t2" headers="r1c1-t2">
+<p class="synopsis">22023</p>
+</td>
+<td align="left" headers="r50c1-t2 r1c2-t2">
+<p class="synopsis">invalid parameter value</p>
+</td>
+<td align="left" headers="r50c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01025</p>
+<p class="synopsis">ORA-01488</p>
+<p class="synopsis">ORA-04000 .. 04019</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r51c1-t2" headers="r1c1-t2">
+<p class="synopsis">22024</p>
+</td>
+<td align="left" headers="r51c1-t2 r1c2-t2">
+<p class="synopsis">unterminated C string</p>
+</td>
+<td align="left" headers="r51c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01479 .. 01480</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r52c1-t2" headers="r1c1-t2">
+<p class="synopsis">22025</p>
+</td>
+<td align="left" headers="r52c1-t2 r1c2-t2">
+<p class="synopsis">invalid escape sequence</p>
+</td>
+<td align="left" headers="r52c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01424</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r53c1-t2" headers="r1c1-t2">
+<p class="synopsis">22026</p>
+</td>
+<td align="left" headers="r53c1-t2 r1c2-t2">
+<p class="synopsis">string data - length mismatch</p>
+</td>
+<td align="left" headers="r53c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r54c1-t2" headers="r1c1-t2">
+<p class="synopsis">22027</p>
+</td>
+<td align="left" headers="r54c1-t2 r1c2-t2">
+<p class="synopsis">trim error</p>
+</td>
+<td align="left" headers="r54c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r55c1-t2" headers="r1c1-t2">
+<p class="synopsis">23000</p>
+</td>
+<td align="left" headers="r55c1-t2 r1c2-t2">
+<p class="synopsis">integrity constraint violation</p>
+</td>
+<td align="left" headers="r55c1-t2 r1c3-t2">
+<p class="synopsis">ORA-00001</p>
+<p class="synopsis">ORA-02290 .. 02299</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r56c1-t2" headers="r1c1-t2">
+<p class="synopsis">24000</p>
+</td>
+<td align="left" headers="r56c1-t2 r1c2-t2">
+<p class="synopsis">invalid cursor state</p>
+</td>
+<td align="left" headers="r56c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01001 .. 01003</p>
+<p class="synopsis">ORA-01410</p>
+<p class="synopsis">ORA-08006</p>
+<p class="synopsis">SQL-02114</p>
+<p class="synopsis">SQL-02117</p>
+<p class="synopsis">SQL-02118</p>
+<p class="synopsis">SQL-02122</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r57c1-t2" headers="r1c1-t2">
+<p class="synopsis">25000</p>
+</td>
+<td align="left" headers="r57c1-t2 r1c2-t2">
+<p class="synopsis">invalid transaction state</p>
+</td>
+<td align="left" headers="r57c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r58c1-t2" headers="r1c1-t2">
+<p class="synopsis">26000</p>
+</td>
+<td align="left" headers="r58c1-t2 r1c2-t2">
+<p class="synopsis">invalid SQL statement name</p>
+</td>
+<td align="left" headers="r58c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r59c1-t2" headers="r1c1-t2">
+<p class="synopsis">27000</p>
+</td>
+<td align="left" headers="r59c1-t2 r1c2-t2">
+<p class="synopsis">triggered data change violation</p>
+</td>
+<td align="left" headers="r59c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r60c1-t2" headers="r1c1-t2">
+<p class="synopsis">28000</p>
+</td>
+<td align="left" headers="r60c1-t2 r1c2-t2">
+<p class="synopsis">invalid authorization specification</p>
+</td>
+<td align="left" headers="r60c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r61c1-t2" headers="r1c1-t2">
+<p class="synopsis">2A000</p>
+</td>
+<td align="left" headers="r61c1-t2 r1c2-t2">
+<p class="synopsis">direct SQL syntax error or access rule violation</p>
+</td>
+<td align="left" headers="r61c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r62c1-t2" headers="r1c1-t2">
+<p class="synopsis">2B000</p>
+</td>
+<td align="left" headers="r62c1-t2 r1c2-t2">
+<p class="synopsis">dependent privilege descriptors still exist</p>
+</td>
+<td align="left" headers="r62c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r63c1-t2" headers="r1c1-t2">
+<p class="synopsis">2C000</p>
+</td>
+<td align="left" headers="r63c1-t2 r1c2-t2">
+<p class="synopsis">invalid character set name</p>
+</td>
+<td align="left" headers="r63c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r64c1-t2" headers="r1c1-t2">
+<p class="synopsis">2D000</p>
+</td>
+<td align="left" headers="r64c1-t2 r1c2-t2">
+<p class="synopsis">invalid transaction termination</p>
+</td>
+<td align="left" headers="r64c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r65c1-t2" headers="r1c1-t2">
+<p class="synopsis">2E000</p>
+</td>
+<td align="left" headers="r65c1-t2 r1c2-t2">
+<p class="synopsis">invalid connection name</p>
+</td>
+<td align="left" headers="r65c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r66c1-t2" headers="r1c1-t2">
+<p class="synopsis">33000</p>
+</td>
+<td align="left" headers="r66c1-t2 r1c2-t2">
+<p class="synopsis">invalid SQL descriptor name</p>
+</td>
+<td align="left" headers="r66c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r67c1-t2" headers="r1c1-t2">
+<p class="synopsis">34000</p>
+</td>
+<td align="left" headers="r67c1-t2 r1c2-t2">
+<p class="synopsis">invalid cursor name</p>
+</td>
+<td align="left" headers="r67c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r68c1-t2" headers="r1c1-t2">
+<p class="synopsis">35000</p>
+</td>
+<td align="left" headers="r68c1-t2 r1c2-t2">
+<p class="synopsis">invalid condition number</p>
+</td>
+<td align="left" headers="r68c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r69c1-t2" headers="r1c1-t2">
+<p class="synopsis">37000</p>
+</td>
+<td align="left" headers="r69c1-t2 r1c2-t2">
+<p class="synopsis">dynamic SQL syntax error or access rule violation</p>
+</td>
+<td align="left" headers="r69c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r70c1-t2" headers="r1c1-t2">
+<p class="synopsis">3C000</p>
+</td>
+<td align="left" headers="r70c1-t2 r1c2-t2">
+<p class="synopsis">ambiguous cursor name</p>
+</td>
+<td align="left" headers="r70c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r71c1-t2" headers="r1c1-t2">
+<p class="synopsis">3D000</p>
+</td>
+<td align="left" headers="r71c1-t2 r1c2-t2">
+<p class="synopsis">invalid catalog name</p>
+</td>
+<td align="left" headers="r71c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r72c1-t2" headers="r1c1-t2">
+<p class="synopsis">3F000</p>
+</td>
+<td align="left" headers="r72c1-t2 r1c2-t2">
+<p class="synopsis">invalid schema name</p>
+</td>
+<td align="left" headers="r72c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r73c1-t2" headers="r1c1-t2">
+<p class="synopsis">40000</p>
+</td>
+<td align="left" headers="r73c1-t2 r1c2-t2">
+<p class="synopsis">transaction rollback</p>
+</td>
+<td align="left" headers="r73c1-t2 r1c3-t2">
+<p class="synopsis">ORA-02091 .. 02092</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r74c1-t2" headers="r1c1-t2">
+<p class="synopsis">40001</p>
+</td>
+<td align="left" headers="r74c1-t2 r1c2-t2">
+<p class="synopsis">serialization failure</p>
+</td>
+<td align="left" headers="r74c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r75c1-t2" headers="r1c1-t2">
+<p class="synopsis">40002</p>
+</td>
+<td align="left" headers="r75c1-t2 r1c2-t2">
+<p class="synopsis">integrity constraint violation</p>
+</td>
+<td align="left" headers="r75c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r76c1-t2" headers="r1c1-t2">
+<p class="synopsis">40003</p>
+</td>
+<td align="left" headers="r76c1-t2 r1c2-t2">
+<p class="synopsis">statement completion unknown</p>
+</td>
+<td align="left" headers="r76c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r77c1-t2" headers="r1c1-t2">
+<p class="synopsis">42000</p>
+</td>
+<td align="left" headers="r77c1-t2 r1c2-t2">
+<p class="synopsis">syntax error or access rule violation</p>
+</td>
+<td align="left" headers="r77c1-t2 r1c3-t2">
+<p class="synopsis">ORA-00022</p>
+<p class="synopsis">ORA-00251</p>
+<p class="synopsis">ORA-00900 .. 00999</p>
+<p class="synopsis">ORA-01031</p>
+<p class="synopsis">ORA-01490 .. 01493</p>
+<p class="synopsis">ORA-01700 .. 01799</p>
+<p class="synopsis">ORA-01900 .. 02099</p>
+<p class="synopsis">ORA-02140 .. 02289</p>
+<p class="synopsis">ORA-02420 .. 02424</p>
+<p class="synopsis">ORA-02450 .. 02499</p>
+<p class="synopsis">ORA-03276 .. 03299</p>
+<p class="synopsis">ORA-04040 .. 04059</p>
+<p class="synopsis">ORA-04070 .. 04099</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r78c1-t2" headers="r1c1-t2">
+<p class="synopsis">44000</p>
+</td>
+<td align="left" headers="r78c1-t2 r1c2-t2">
+<p class="synopsis">with check option violation</p>
+</td>
+<td align="left" headers="r78c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01402</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r79c1-t2" headers="r1c1-t2">
+<p class="synopsis">60000</p>
+</td>
+<td align="left" headers="r79c1-t2 r1c2-t2">
+<p class="synopsis">system errors</p>
+</td>
+<td align="left" headers="r79c1-t2 r1c3-t2">
+<p class="synopsis">ORA-00370 .. 00429</p>
+<p class="synopsis">ORA-00600 .. 00899</p>
+<p class="synopsis">ORA-06430 .. 06449</p>
+<p class="synopsis">ORA-07200 .. 07999</p>
+<p class="synopsis">ORA-09700 .. 09999</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r80c1-t2" headers="r1c1-t2">
+<p class="synopsis">61000</p>
+</td>
+<td align="left" headers="r80c1-t2 r1c2-t2">
+<p class="synopsis">resource error</p>
+</td>
+<td align="left" headers="r80c1-t2 r1c3-t2">
+<p class="synopsis">ORA-00018 .. 00035</p>
+<p class="synopsis">ORA-00050 .. 00068</p>
+<p class="synopsis">ORA-02376 .. 02399</p>
+<p class="synopsis">ORA-04020 .. 04039</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r81c1-t2" headers="r1c1-t2">
+<p class="synopsis">62000</p>
+</td>
+<td align="left" headers="r81c1-t2 r1c2-t2">
+<p class="synopsis">path name server and detached process errors</p>
+</td>
+<td align="left" headers="r81c1-t2 r1c3-t2">
+<p class="synopsis">ORA-00100 .. 00120</p>
+<p class="synopsis">ORA-00440 .. 00569</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r82c1-t2" headers="r1c1-t2">
+<p class="synopsis">63000</p>
+</td>
+<td align="left" headers="r82c1-t2 r1c2-t2">
+<p class="synopsis">Oracle*XA and two-task interface errors</p>
+</td>
+<td align="left" headers="r82c1-t2 r1c3-t2">
+<p class="synopsis">ORA-00150 .. 00159</p>
+<p class="synopsis">SQL-02128</p>
+<p class="synopsis">ORA-02700 .. 02899</p>
+<p class="synopsis">ORA-03100 .. 03199</p>
+<p class="synopsis">ORA-06200 .. 06249</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r83c1-t2" headers="r1c1-t2">
+<p class="synopsis">64000</p>
+</td>
+<td align="left" headers="r83c1-t2 r1c2-t2">
+<p class="synopsis">control file, database file, and redo file errors;</p>
+<p class="synopsis">archival and media recovery errors</p>
+</td>
+<td align="left" headers="r83c1-t2 r1c3-t2">
+<p class="synopsis">ORA-00200 .. 00369</p>
+<p class="synopsis">ORA-01100 .. 01250</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r84c1-t2" headers="r1c1-t2">
+<p class="synopsis">65000</p>
+</td>
+<td align="left" headers="r84c1-t2 r1c2-t2">
+<p class="synopsis">PL/SQL errors</p>
+</td>
+<td align="left" headers="r84c1-t2 r1c3-t2">
+<p class="synopsis">ORA-06500 .. 06599</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r85c1-t2" headers="r1c1-t2">
+<p class="synopsis">66000</p>
+</td>
+<td align="left" headers="r85c1-t2 r1c2-t2">
+<p class="synopsis">SQL*Net driver errors</p>
+</td>
+<td align="left" headers="r85c1-t2 r1c3-t2">
+<p class="synopsis">ORA-06000 .. 06149</p>
+<p class="synopsis">ORA-06250 .. 06429</p>
+<p class="synopsis">ORA-06600 .. 06999</p>
+<p class="synopsis">ORA-12100 .. 12299</p>
+<p class="synopsis">ORA-12500 .. 12599</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r86c1-t2" headers="r1c1-t2">
+<p class="synopsis">67000</p>
+</td>
+<td align="left" headers="r86c1-t2 r1c2-t2">
+<p class="synopsis">licensing errors</p>
+</td>
+<td align="left" headers="r86c1-t2 r1c3-t2">
+<p class="synopsis">ORA-00430 .. 00439</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r87c1-t2" headers="r1c1-t2">
+<p class="synopsis">69000</p>
+</td>
+<td align="left" headers="r87c1-t2 r1c2-t2">
+<p class="synopsis">SQL*Connect errors</p>
+</td>
+<td align="left" headers="r87c1-t2 r1c3-t2">
+<p class="synopsis">ORA-00570 .. 00599</p>
+<p class="synopsis">ORA-07000 .. 07199</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r88c1-t2" headers="r1c1-t2">
+<p class="synopsis">72000</p>
+</td>
+<td align="left" headers="r88c1-t2 r1c2-t2">
+<p class="synopsis">SQL execute phase errors</p>
+</td>
+<td align="left" headers="r88c1-t2 r1c3-t2">
+<p class="synopsis">ORA-01000 .. 01099</p>
+<p class="synopsis">ORA-01400 .. 01489</p>
+<p class="synopsis">ORA-01495 .. 01499</p>
+<p class="synopsis">ORA-01500 .. 01699</p>
+<p class="synopsis">ORA-02400 .. 02419</p>
+<p class="synopsis">ORA-02425 .. 02449</p>
+<p class="synopsis">ORA-04060 .. 04069</p>
+<p class="synopsis">ORA-08000 .. 08190</p>
+<p class="synopsis">ORA-12000 .. 12019</p>
+<p class="synopsis">ORA-12300 .. 12499</p>
+<p class="synopsis">ORA-12700 .. 21999</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r89c1-t2" headers="r1c1-t2">
+<p class="synopsis">82100</p>
+</td>
+<td align="left" headers="r89c1-t2 r1c2-t2">
+<p class="synopsis">out of memory (could not allocate)</p>
+</td>
+<td align="left" headers="r89c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02100</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r90c1-t2" headers="r1c1-t2">
+<p class="synopsis">82101</p>
+</td>
+<td align="left" headers="r90c1-t2 r1c2-t2">
+<p class="synopsis">inconsistent cursor cache: unit cursor/global cursor mismatch</p>
+</td>
+<td align="left" headers="r90c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02101</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r91c1-t2" headers="r1c1-t2">
+<p class="synopsis">82102</p>
+</td>
+<td align="left" headers="r91c1-t2 r1c2-t2">
+<p class="synopsis">inconsistent cursor cache: no global cursor entry</p>
+</td>
+<td align="left" headers="r91c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02102</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r92c1-t2" headers="r1c1-t2">
+<p class="synopsis">82103</p>
+</td>
+<td align="left" headers="r92c1-t2 r1c2-t2">
+<p class="synopsis">inconsistent cursor cache: out of range cursor cache reference</p>
+</td>
+<td align="left" headers="r92c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02103</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r93c1-t2" headers="r1c1-t2">
+<p class="synopsis">82104</p>
+</td>
+<td align="left" headers="r93c1-t2 r1c2-t2">
+<p class="synopsis">inconsistent host cache: no cursor cache available</p>
+</td>
+<td align="left" headers="r93c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02104</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r94c1-t2" headers="r1c1-t2">
+<p class="synopsis">82105</p>
+</td>
+<td align="left" headers="r94c1-t2 r1c2-t2">
+<p class="synopsis">inconsistent cursor cache: global cursor not found</p>
+</td>
+<td align="left" headers="r94c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02105</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r95c1-t2" headers="r1c1-t2">
+<p class="synopsis">82106</p>
+</td>
+<td align="left" headers="r95c1-t2 r1c2-t2">
+<p class="synopsis">inconsistent cursor cache: invalid Oracle cursor number</p>
+</td>
+<td align="left" headers="r95c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02106</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r96c1-t2" headers="r1c1-t2">
+<p class="synopsis">82107</p>
+</td>
+<td align="left" headers="r96c1-t2 r1c2-t2">
+<p class="synopsis">program too old for runtime library</p>
+</td>
+<td align="left" headers="r96c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02107</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r97c1-t2" headers="r1c1-t2">
+<p class="synopsis">82108</p>
+</td>
+<td align="left" headers="r97c1-t2 r1c2-t2">
+<p class="synopsis">invalid descriptor passed to runtime library</p>
+</td>
+<td align="left" headers="r97c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02108</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r98c1-t2" headers="r1c1-t2">
+<p class="synopsis">82109</p>
+</td>
+<td align="left" headers="r98c1-t2 r1c2-t2">
+<p class="synopsis">inconsistent host cache: host reference is out of range</p>
+</td>
+<td align="left" headers="r98c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02109</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r99c1-t2" headers="r1c1-t2">
+<p class="synopsis">82110</p>
+</td>
+<td align="left" headers="r99c1-t2 r1c2-t2">
+<p class="synopsis">inconsistent host cache: invalid host cache entry type</p>
+</td>
+<td align="left" headers="r99c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02110</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r100c1-t2" headers="r1c1-t2">
+<p class="synopsis">82111</p>
+</td>
+<td align="left" headers="r100c1-t2 r1c2-t2">
+<p class="synopsis">heap consistency error</p>
+</td>
+<td align="left" headers="r100c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02111</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r101c1-t2" headers="r1c1-t2">
+<p class="synopsis">82112</p>
+</td>
+<td align="left" headers="r101c1-t2 r1c2-t2">
+<p class="synopsis">unable to open message file</p>
+</td>
+<td align="left" headers="r101c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02113</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r102c1-t2" headers="r1c1-t2">
+<p class="synopsis">82113</p>
+</td>
+<td align="left" headers="r102c1-t2 r1c2-t2">
+<p class="synopsis">code generation internal consistency failed</p>
+</td>
+<td align="left" headers="r102c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02115</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r103c1-t2" headers="r1c1-t2">
+<p class="synopsis">82114</p>
+</td>
+<td align="left" headers="r103c1-t2 r1c2-t2">
+<p class="synopsis">reentrant code generator gave invalid context</p>
+</td>
+<td align="left" headers="r103c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02116</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r104c1-t2" headers="r1c1-t2">
+<p class="synopsis">82115</p>
+</td>
+<td align="left" headers="r104c1-t2 r1c2-t2">
+<p class="synopsis">invalid hstdef argument</p>
+</td>
+<td align="left" headers="r104c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02119</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r105c1-t2" headers="r1c1-t2">
+<p class="synopsis">82116</p>
+</td>
+<td align="left" headers="r105c1-t2 r1c2-t2">
+<p class="synopsis">first and second arguments to sqlrcn both null</p>
+</td>
+<td align="left" headers="r105c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02120</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r106c1-t2" headers="r1c1-t2">
+<p class="synopsis">82117</p>
+</td>
+<td align="left" headers="r106c1-t2 r1c2-t2">
+<p class="synopsis">invalid OPEN or PREPARE for this connection</p>
+</td>
+<td align="left" headers="r106c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02122</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r107c1-t2" headers="r1c1-t2">
+<p class="synopsis">82118</p>
+</td>
+<td align="left" headers="r107c1-t2 r1c2-t2">
+<p class="synopsis">application context not found</p>
+</td>
+<td align="left" headers="r107c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02123</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r108c1-t2" headers="r1c1-t2">
+<p class="synopsis">82119</p>
+</td>
+<td align="left" headers="r108c1-t2 r1c2-t2">
+<p class="synopsis">connect error; can't get error text</p>
+</td>
+<td align="left" headers="r108c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02125</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r109c1-t2" headers="r1c1-t2">
+<p class="synopsis">82120</p>
+</td>
+<td align="left" headers="r109c1-t2 r1c2-t2">
+<p class="synopsis">precompiler/SQLLIB version mismatch.</p>
+</td>
+<td align="left" headers="r109c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02127</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r110c1-t2" headers="r1c1-t2">
+<p class="synopsis">82121</p>
+</td>
+<td align="left" headers="r110c1-t2 r1c2-t2">
+<p class="synopsis">FETCHed number of bytes is odd</p>
+</td>
+<td align="left" headers="r110c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02129</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r111c1-t2" headers="r1c1-t2">
+<p class="synopsis">82122</p>
+</td>
+<td align="left" headers="r111c1-t2 r1c2-t2">
+<p class="synopsis">EXEC TOOLS interface is not available</p>
+</td>
+<td align="left" headers="r111c1-t2 r1c3-t2">
+<p class="synopsis">SQL-02130</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r112c1-t2" headers="r1c1-t2">
+<p class="synopsis">90000</p>
+</td>
+<td align="left" headers="r112c1-t2 r1c2-t2">
+<p class="synopsis">debug events</p>
+</td>
+<td align="left" headers="r112c1-t2 r1c3-t2">
+<p class="synopsis">ORA-10000 .. 10999</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r113c1-t2" headers="r1c1-t2">
+<p class="synopsis">99999</p>
+</td>
+<td align="left" headers="r113c1-t2 r1c2-t2">
+<p class="synopsis">catch all</p>
+</td>
+<td align="left" headers="r113c1-t2 r1c3-t2">
+<p class="synopsis">all others</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r114c1-t2" headers="r1c1-t2">
+<p class="synopsis">HZ000</p>
+</td>
+<td align="left" headers="r114c1-t2 r1c2-t2">
+<p class="synopsis">remote database access</p>
+</td>
+<td align="left" headers="r114c1-t2 r1c3-t2">
+<p class="synopsis">&nbsp;</p>
+<br></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
